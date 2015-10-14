@@ -1,0 +1,99 @@
+#! /bin/sh
+# -*- mode: scheme; coding: utf-8 -*-
+export GUILE_WARN_DEPRECATED="detailed"
+exec @GUILE@ --no-auto-compile -e main -s "$0" "$@"
+!#
+
+;;;; Copyright (C) 2014
+;;;; Free Software Foundation, Inc.
+
+;;;; This file is part of the guile-clutter examples set.
+
+;;;; Guile-clutter examples set is free software: you can redistribute
+;;;; it and/or modify it under the terms of the GNU General Public
+;;;; License as published by the Free Software Foundation, either
+;;;; version 3 of the License, or (at your option) any later version.
+
+;;;; Guile-clutter examples set is distributed in the hope that it
+;;;; will be useful WARRANTY; without even the implied warranty of
+;;;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+;;;; General Public License for more details.
+
+;;;; You should have received a copy of the GNU General Public License
+;;;; along with the guile-clutter examples set.  If not, see
+;;;; <http://www.gnu.org/licenses/>.
+
+;;; Commentary:
+
+;;       <- stands for ->
+;; clue                   clutter example
+;; clues                  clutter examples set
+;; clus                   clutter support
+
+;;; Code:
+
+
+(eval-when (expand load eval)
+  (use-modules (oop goops))
+  (default-duplicate-binding-handler
+    '(merge-generics replace warn-override-core warn last)))
+
+(use-modules (ice-9 getopt-long)
+	     (ice-9 receive)
+	     (gnome-2)
+	     (cairo)
+             (gnome gobject)
+             (gnome glib)
+             (gnome clutter)
+	     (grip server)
+	     (grip clutter)
+	     (grip clutter clock)
+	     (grip clutter examples clue))
+
+
+(define *stage* #f)
+(define *clue* #f)
+(define *clock* #f)
+
+
+;;;
+;;; The 2d clock example
+;;;
+
+(define (main args)
+  (let* ((clue-cmd (basename (car args)))
+	 (clue-name "The 2d clock")
+	 (clue-title (clue-get-title clue-name))
+	 (options (getopt-long args (clue-get-synopsis)))
+	 (help? (option-ref options 'help #f))
+	 (version? (option-ref options 'version #f))
+	 (debug? (option-ref options 'debug #f))
+	 (oport (current-output-port)))
+    (cond (help? (clue-display-help clue-cmd oport))
+	  (version? (clue-display-version clue-name oport))
+	  (else
+	   (let* ((stage (make <clus-stage> #:width *clus-stage-width*
+			       #:height *clus-stage-height*
+			       #:title clue-title
+			       #:colour *clus-stage-colour*))
+		  (clue (make <clue> #:name clue-name #:stage stage))
+		  (clock (make <clus-clock> #:width 300 #:height 300)))
+	     (set-position clock 300 218)
+	     (add-child stage clock)
+	     ;; (set-user-resizable stage #t)
+	     (show stage)
+	     (clue-display-version clue-name oport)
+	     (when debug?
+	       (set! *stage* stage)
+	       (set! *clue* clue)
+	       (set! *clock* clock)
+	       (receive (server-port thread)
+		   (spawn-server-any-port #:start 1968)
+		 (clue-display-debug-help clue-name server-port oport
+					  #:ovars '(("*clock*" . "<clus-clock>")))))
+	     (call-with-new-thread
+	      (lambda ()
+		(while #t
+		  (sleep 1)
+		  (invalidate (get-content clock)))))
+	     (clutter-main))))))

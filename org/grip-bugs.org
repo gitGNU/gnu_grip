@@ -1,0 +1,74 @@
+;; -*- mode: org; coding: utf-8 -*-
+
+#+TITLE: grip BUGS file
+
+* Grip
+
+** Bugs
+
+*** OPEN [[1] 3] example
+
+** Wishlist
+
+*** NEXT [[0] 1] nothing yet
+
+* Guile-Gnome-Grip
+
+** Bugs
+
+*** OPEN [[1] 3] example
+
+** Wishlist
+
+*** NEXT [[0] 1] nothing yet
+
+* Guile-Clutter-Grip
+
+** Bugs
+
+*** OPEN [[1] 3] example
+
+** Wishlist
+
+*** NEXT [[0] 1] nothing yet
+
+
+* Severity levels
+
+** 7 critical
+
+makes unrelated software on the system (or the whole system) break, or
+causes serious data loss, or introduces a security hole on systems
+where you install the package.
+
+** 6 grave
+
+makes the package in question unusable or mostly so, or causes data
+loss, or introduces a security hole allowing access to the accounts of
+users who use the package.
+
+** 5 serious
+
+is a severe violation of Debian policy (roughly, it violates a "must"
+or "required" directive), or, in the package maintainer's or release
+manager's opinion, makes the package unsuitable for release.
+
+** 4 important
+
+a bug which has a major effect on the usability of a package, without
+rendering it completely unusable to everyone.
+
+** 3 normal
+
+the default value, applicable to most bugs.
+
+** 2 minor
+
+a problem which doesn't affect the package's usefulness, and is
+presumably trivial to fix.
+
+** 1 wishlist
+
+for any feature request, and also for any bugs that are very difficult
+to fix due to major design considerations.
+

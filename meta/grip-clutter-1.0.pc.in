@@ -1,0 +1,8 @@
+# Package Information for pkg-config
+
+prefix=@GUILE_PREFIX@
+module_directory=@GUILE_GLOBAL_SITE@/grip/clutter
+
+Name: Grip-Clutter
+Description: A Clutter Grip of Really Important Procedures
+Version: @VERSION@

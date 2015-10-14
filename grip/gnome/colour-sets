@@ -1,0 +1,12 @@
+(;; Persistance of memory [S. Dali]
+ (0 . ("#60a8a8" "#529694" "#000000" "sobe"))
+ (1 . ("#ac5251" "#9a4a49" "#000000" "red-walls"))
+ (2 . ("#483078" "#412b6c" "#000000" "pansy"))
+ (3 . ("#784800" "#6b4100" "#ffa500" "dirt"))
+ (4 . ("#2c4d56" "#28454d" "#000000" "scary-water"))
+ (5 . ("#90c0a8" "#84ae94" "#000000" "aqua-night"))
+ (6 . ("#483000" "#422800" "#000000" "bittersweet"))
+ (7 . ("#d8d860" "#c6c352" "#000000" "retro-flowers"))
+ ;; X11 based
+ (50 . ("LightYellow3" "LightYellow4" "#000000" "lightyellow3"))
+ (60 . ("#aabbaa" "#2f4f2f" "#000000" "palegreen")))

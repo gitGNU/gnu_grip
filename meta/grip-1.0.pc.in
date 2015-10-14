@@ -1,0 +1,9 @@
+# Package Information for pkg-config
+
+prefix=@prefix@
+
+module_directory=@GUILE_GLOBAL_SITE@/grip
+
+Name: Grip
+Description: A Grip of Really Important Procedures
+Version: @VERSION@

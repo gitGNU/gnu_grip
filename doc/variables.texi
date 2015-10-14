@@ -1,0 +1,22 @@
+@c -*- mode: texinfo; coding: utf-8 -*-
+@c This is part of the Grip User Manual.
+@c Copyright (C)  2011 - 2015
+@c David Pirotte <david at altosw dot be>
+@c See the file grip.texi for copying conditions.
+
+@set TITLE Grip User Manual
+
+@set MANUAL-REVISION 1
+
+@set UGUILE http://www.gnu.org/software/guile
+@set UGUILE-GNOME http://www.gnu.org/software/guile-gnome
+@set UGUILE-CLUTTER <fixme>
+@set USQLITE http://www.sqlite.org
+@set USQLITE3-PCRE https://github.com/oojah/sqlite3-pcre
+@set ULATEX http://www.latex-project.org
+@set UIWONA http://www.tug.dk/FontCatalogue/iwona/
+@set USCHEME http://schemers.org
+@set UALTO http://altosw.be
+@set UGRIP <fixme>
+@set UGRIP-RELEASES <fixme>
+@set UGRIP-LATEST <fixme>

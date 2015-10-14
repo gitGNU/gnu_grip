@@ -1,0 +1,120 @@
+#! /bin/sh
+# -*- mode: scheme; coding: utf-8 -*-
+export GUILE_WARN_DEPRECATED="detailed"
+exec @GUILE@ --no-auto-compile -e main -s "$0" "$@"
+!#
+
+;;;;
+;;;; Copyright (C) 2011 - 2015
+;;;; David Pirotte <david at altosw dot be>
+
+;;;; This file is part of Grip.
+;;;; A Grip of Really Important Procedures.
+
+;;;; Grip is free software: you can redistribute it and/or modify it
+;;;; under the terms of the GNU General Public License as published by
+;;;; the Free Software Foundation, either version 3 of the License, or
+;;;; (at your option) any later version.
+
+;;;; Grip is distributed in the hope that it will be useful WARRANTY;
+;;;; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+;;;; A PARTICULAR PURPOSE.  See the GNU General Public License for more
+;;;; details.
+
+;;;; You should have received a copy of the GNU General Public License
+;;;; along with Grip.  If not, see <http://www.gnu.org/licenses/>.
+;;;;
+
+;;; Commentary:
+
+;;       <- stands for ->
+;; clue                   clutter example
+;; clues                  clutter examples set
+;; clus                   clutter support
+
+;;; Code:
+
+
+(eval-when (expand load eval)
+  (use-modules (oop goops))
+  (default-duplicate-binding-handler
+    '(merge-generics replace warn-override-core warn last)))
+
+(use-modules (ice-9 getopt-long)
+	     (ice-9 receive)
+	     (gnome-2)
+	     (cairo)
+             (gnome gobject)
+             (gnome glib)
+             (gnome clutter)
+	     (grip server)
+	     (grip clutter)
+	     (grip clutter examples clue)
+	     (grip clutter examples bouncer))
+
+
+(define *stage* #f)
+(define *clue* #f)
+(define *bouncer* #f)
+
+
+;;;
+;;; The bouncer example
+;;;
+
+(define (main args)
+  (let* ((clue-cmd (basename (car args)))
+	 (clue-name "The bouncer")
+	 (clue-title (clue-get-title clue-name))
+	 (options (getopt-long args (clue-get-synopsis)))
+	 (help? (option-ref options 'help #f))
+	 (version? (option-ref options 'version #f))
+	 (debug? (option-ref options 'debug #f))
+	 (oport (current-output-port)))
+    (cond (help? (clue-display-help clue-cmd oport))
+	  (version? (clue-display-version clue-name oport))
+	  (else
+	   (let* ((stage (make <clus-stage> #:width *clus-stage-width*
+			       #:height *clus-stage-height*
+			       #:title clue-title
+			       #:colour *clus-stage-colour*))
+		  (clue (make <clue> #:name clue-name #:stage stage))
+		  (bouncer (make <clus-bouncer>
+			     #:x 300 #:y 200 #:width 50 #:height 50
+			     #:colour (get-colour "Green3"))))
+	     (add-child stage bouncer)
+	     (receive (label lw lh)
+		 (clue-bouncer-help-label *clus-label-font*
+					  *clus-label-fg*
+					  (clus-current-easing-mode))
+	       (clus-snap-south-east stage label 36 36)
+	       (add-child stage label)
+	       (connect stage
+			'button-press-event
+			(lambda (s e)
+			  (case (get-button e)
+			    ((1)
+			     (receive (x y)
+				 (get-coords e)
+			       (save-easing-state bouncer)
+			       (set-easing-duration bouncer 1000)
+			       (set-easing-mode bouncer (clus-current-easing-mode))
+			       (set-position bouncer x y)
+			       (restore-easing-state bouncer)))
+			    ((3)
+			     (clus-next-easing-mode)
+			     (set-markup label
+					 (clue-bouncer-help-message (clus-current-easing-mode)))))
+			  #t))) ;; stops the event propagation
+	     (show stage)
+	     (set-user-resizable stage #t)
+	     (clue-display-version clue-name oport)
+	     (when debug?
+	       (set! *stage* stage)
+	       (set! *clue* clue)
+	       (set! *bouncer* bouncer)
+	       (receive (server-port thread)
+		   (spawn-server-any-port #:start 1968)
+		 (clue-display-debug-help clue-name server-port oport
+					  #:ovars '(("*bouncer*" . "<clus-bouncer>")))))
+	     (clutter-main))))))

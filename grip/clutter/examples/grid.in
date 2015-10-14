@@ -1,0 +1,127 @@
+#! /bin/sh
+# -*- mode: scheme; coding: utf-8 -*-
+export GUILE_WARN_DEPRECATED="detailed"
+exec @GUILE@ --no-auto-compile -e main -s "$0" "$@"
+!#
+
+;;;;
+;;;; Copyright (C) 2011 - 2015
+;;;; David Pirotte <david at altosw dot be>
+
+;;;; This file is part of Grip.
+;;;; A Grip of Really Important Procedures.
+
+;;;; Grip is free software: you can redistribute it and/or modify it
+;;;; under the terms of the GNU General Public License as published by
+;;;; the Free Software Foundation, either version 3 of the License, or
+;;;; (at your option) any later version.
+
+;;;; Grip is distributed in the hope that it will be useful WARRANTY;
+;;;; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+;;;; A PARTICULAR PURPOSE.  See the GNU General Public License for more
+;;;; details.
+
+;;;; You should have received a copy of the GNU General Public License
+;;;; along with Grip.  If not, see <http://www.gnu.org/licenses/>.
+;;;;
+
+;;; Commentary:
+
+;;       <- stands for ->
+;; clue                   clutter example
+;; clues                  clutter examples set
+;; clus                   clutter support
+
+;;; Code:
+
+
+(eval-when (expand load eval)
+  (use-modules (oop goops))
+  (default-duplicate-binding-handler
+    '(merge-generics replace warn-override-core warn last)))
+
+(use-modules (ice-9 getopt-long)
+	     (ice-9 receive)
+	     (gnome-2)
+	     (cairo)
+             (gnome gobject)
+             (gnome glib)
+             (gnome clutter)
+	     (grip goops)
+	     (grip server)
+	     (grip clutter)
+	     (grip clutter bin)
+	     (grip clutter grid)
+	     (grip clutter colour)
+	     (grip clutter globals)
+	     (grip clutter constraint)
+	     (grip clutter examples clue)
+	     (grip clutter examples grid))
+
+
+(define *stage* #f)
+(define *clue* #f)
+(define *grid* #f)
+(define *help* #f)
+
+
+;;;
+;;; The grid-layout example
+;;;
+
+(define (main args)
+  (let* ((clue-cmd (basename (car args)))
+	 (clue-name "The grid layout")
+	 (clue-title (clue-get-title clue-name))
+	 (options (getopt-long args (clue-get-synopsis)))
+	 (help? (option-ref options 'help #f))
+	 (version? (option-ref options 'version #f))
+	 (debug? (option-ref options 'debug #f))
+	 (oport (current-output-port)))
+    (cond (help? (clue-display-help clue-cmd oport))
+	  (version? (clue-display-version clue-name oport))
+	  (else
+	   (let* ((stage-colour *clus-stage-colour*)
+		  (grid-colour (get-darker-colour stage-colour))
+		  (grid-child-bg (get-lighter-colour *clus-stage-colour*))
+		  (grid-child-fg (get-colour "Gainsboro"))
+		  (stage (make <clus-stage>
+			   #:width *clus-stage-width*
+			   #:height *clus-stage-height*
+			   #:title clue-title
+			   #:colour stage-colour))
+		  (grid (make <clus-grid>
+			  #:colour grid-colour
+			  #:orientation 'horizontal
+			  #:row-spacing 2
+			  #:column-spacing 2
+			  #:row-homogeneous #t       ;; should be #f but with the current binding,
+			  #:column-homogeneous #f))  ;; 1.12.2, it leads to bad grid content display
+		  (help (clue-grid-user-help #:bg #f #;grid-colour
+					     #:cbg #f #;grid-child-bg
+					     #:cfg grid-child-fg))
+		  (clue (make <clue>
+			  #:name clue-name
+			  #:stage stage)))
+	     (clue-snap-to-stage clue grid
+				 #:left-margin 20
+				 #:top-margin 20
+				 #:bottom-margin 60
+				 #:right-margin 20)
+	     (clue-grid-fill-grid grid grid-child-bg grid-child-fg)
+	     (add-child stage grid)
+	     (add-child stage help)
+	     (clus-snap-south-west stage help 22 20) ;; when parent only
+	     (set-user-resizable stage #t)
+	     (clue-display-version clue-name oport)
+	     (show stage)
+	     (when debug?
+	       (set! *stage* stage)
+	       (set! *clue* clue)
+	       (set! *grid* grid)
+	       (set! *help* help)
+	       (receive (server-port thread)
+		   (spawn-server-any-port #:start 1968)
+		 (clue-display-debug-help clue-name server-port oport
+					  #:ovars '(("*grid*" . "<clus-grid>")))))
+	     (clutter-main))))))

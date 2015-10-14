@@ -1,0 +1,9 @@
+# Package Information for pkg-config
+
+prefix=@prefix@
+
+module_directory=@GUILE_GLOBAL_SITE@/grip/db
+
+Name: Grip-Sqlite3
+Description: An SQLite3 Grip of Really Important Procedures
+Version: @VERSION@

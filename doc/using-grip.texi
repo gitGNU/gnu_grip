@@ -1,0 +1,18 @@
+@c -*- mode: texinfo; coding: utf-8 -*-
+@c This is part of the Grip User Manual.
+@c Copyright (C)  2011 - 2015
+@c David Pirotte <david at altosw dot be>
+@c See the file grip.texi for copying conditions.
+
+@node Using Grip
+@chapter Using Grip
+
+blabla
+
+@menu
+* Bluefox::
+@end menu
+
+
+@node Bluefox
+@section Bluefox

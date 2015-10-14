@@ -1,0 +1,8 @@
+# Package Information for pkg-config
+
+prefix=@GUILE_PREFIX@
+module_directory=@GUILE_GLOBAL_SITE@/grip/gnome
+
+Name: Grip-Gnome
+Description: A Gnome Grip of Really Important Procedures
+Version: @VERSION@

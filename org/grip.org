@@ -1,0 +1,27 @@
+;; -*- mode: org; coding: utf-8 -*-
+
+#+TITLE: Grip TODO file
+
+* Grip
+
+- [ ] before release, removing/commenting all dimfi calls
+
+* Grip-Gnome
+
+* Grip-Clutter [42%]
+
+- [X] add layout to <clus-apple>
+- [X] box-layout -> layout from <clus-apple>
+- [ ] grid-layout -> layout from <clus-apple>
+- [ ] have to think about how to handle the 'border' if any 
+- [X] bin must be like box, inherit from <clus-apple>
+- [ ] clus-warning-invalid-resistance-factor -> gravity.scm
+
+** Examples
+
+- [ ] debugging hello
+- [ ] toolbar, new and proper helpers [<clus-grid>]
+- [ ] icons and images subdir would be nicer
+
+
+* Grip-SQLite
