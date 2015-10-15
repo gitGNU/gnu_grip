@@ -17,6 +17,7 @@ meta/grip-clutter-1.0.pc
 doc/version.texi
 doc/stamp-vti
 doc/grip.t2p
+grip/clutter/misc
 grip/clutter/examples/bouncer
 grip/clutter/examples/clock
 grip/clutter/examples/grid
