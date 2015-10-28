@@ -36,7 +36,7 @@
   #:export (storage
 	    storage-get
 	    storage-set
-	    displaynl
+	    displayln
 	    dimfi))
 
 
@@ -60,9 +60,14 @@
 		(assq-set! storage key value)))))
 
 
-(define (displaynl message port)
-  (display message port)
-  (newline port))
+(define* (displayln msg #:optional (port #f))
+  (if port
+      (begin
+	(display msg port)
+	(newline port))
+      (begin
+	(display msg)
+	(newline))))
 
 (define (dimfi . items)
   ;; if the first item is a port, we use it.
