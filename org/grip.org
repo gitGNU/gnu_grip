@@ -4,10 +4,20 @@
 
 * Grip
 
-- [ ] before release, removing/commenting all dimfi calls
+** Autotool
 
+- [ ] gglobalsitedir=$(GUILE_GLOBAL_SITE) is not properly set
+      -> see am/guile.mk and make printenv to check
+- [ ] we need gccache, not just gsiteccache [which works ^^ ?]
+- [ ] ggcflags=@GUILE_GNOME_CFLAGS@ does not work either
+      -> see env.in, guile-gnome-2.m4 and configure.ac
+
+** Release
+
+- [ ] removing/commenting all dimfi calls before to release
+
+* Grip-SQLite
 * Grip-Gnome
-
 * Grip-Clutter [42%]
 
 - [X] add layout to <clus-apple>
@@ -19,9 +29,5 @@
 
 ** Examples
 
-- [ ] debugging hello
-- [ ] toolbar, new and proper helpers [<clus-grid>]
-- [ ] icons and images subdir would be nicer
-
-
-* Grip-SQLite
+- [X] toolbar, new and proper helpers [<clus-grid>]
+- [ ] debugging hello [not in dist yet]
