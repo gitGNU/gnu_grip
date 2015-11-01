@@ -25,7 +25,9 @@
 ###
 
 ## GUILE_GNOME_PROGS
+## GUILE_GNOME_PROGS_AVAILABLE
 ## GUILE_GNOME_INST_DIR
+## GUILE_GNOME_LIBS_PATH
 ## GUILE_GNOME_CHECK
 ## GUILE_GNOME_MODULE_CHECK
 ## GUILE_GNOME_MODULE_AVAILABLE
@@ -98,6 +100,63 @@ AC_DEFUN([GUILE_GNOME_PROGS],
     fi
   else
     AC_MSG_ERROR([Guile-Gnome $_guile_gnome_required_version required, but $_guile_gnome_prog_version found])
+  fi
+  AC_MSG_RESULT([$_guile_gnome_prog_version])
+ ])
+
+
+###
+### GUILE_GNOME_PROGS_AVAILABLE
+###   -- set path to the guile-gnome-2 program 
+###
+
+# Usage: GUILE_GNOME_PROGS_AVAILABLE(var, version)
+#
+# like GUILE_GNOME_PROGS, but the macro won't return an error if it
+# did not find guile-gnome @var{version}.
+#
+# @var{var} is a shell variable name to be set to "yes" or "no".
+
+AC_DEFUN([GUILE_GNOME_PROGS_AVAILABLE],
+ [AC_PATH_PROG(GUILE_GNOME, guile-gnome-2)
+  _guile_gnome_required_version="m4_default([$2], [$GUILE_GNOME_EFFECTIVE_VERSION])"
+  if test -z "$_guile_gnome_required_version"; then
+    _guile_gnome_required_version=2.16
+  fi
+#   if test "$GUILE_GNOME" = "" ; then
+#       AC_MSG_ERROR([guile-gnome-2 required but not found])
+#   fi
+  AC_SUBST(GUILE_GNOME)
+
+  _guile_gnome_effective_version=`$PKG_CONFIG --modversion guile-gnome-glib-2`
+  _guile_gnome_major_version=`echo $_guile_gnome_effective_version | cut -d . -f 1`
+  _guile_gnome_minor_version=`echo $_guile_gnome_effective_version | cut -d . -f 2`
+  _guile_gnome_micro_version=`echo $_guile_gnome_effective_version | cut -d . -f 3`
+  _guile_gnome_prog_version="$_guile_gnome_major_version.$_guile_gnome_minor_version.$_guile_gnome_micro_version"
+
+  $1=yes
+  AC_MSG_CHECKING([for Guile-Gnome version >= $_guile_gnome_required_version])
+  _major_version=`echo $_guile_gnome_required_version | cut -d . -f 1`
+  _minor_version=`echo $_guile_gnome_required_version | cut -d . -f 2`
+  _micro_version=`echo $_guile_gnome_required_version | cut -d . -f 3`
+  if test "$_guile_gnome_major_version" -ge "$_major_version"; then
+    if test "$_guile_gnome_minor_version" -ge "$_minor_version"; then
+      if test -n "$_micro_version"; then
+        if test "$_guile_gnome_micro_version" -lt "$_micro_version"; then
+          AC_MSG_RESULT([Guile-Gnome $_guile_gnome_required_version required, but $_guile_gnome_prog_version found])
+	  $1="no"
+        fi
+      fi
+    elif test "$GUILE_GNOME_EFFECTIVE_VERSION" = "$_major_version.$_minor_version" -a -z "$_micro_version"; then
+      # Allow prereleases that have the right effective version.
+      true
+    else
+      AC_MSG_RESULT([Guile-Gnome $_guile_gnome_required_version required, but $_guile_gnome_prog_version found])
+      $1="no"
+    fi
+  else
+    AC_MSG_RESULT([Guile-Gnome $_guile_gnome_required_version required, but $_guile_gnome_prog_version found])
+    $1="no"
   fi
   AC_MSG_RESULT([$_guile_gnome_prog_version])
  ])
