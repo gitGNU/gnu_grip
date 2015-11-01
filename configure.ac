@@ -87,6 +87,9 @@ GUILE_SITE_CCACHE_DIR
 
 GUILE_GNOME_PROGS_AVAILABLE([HAVE_GUILE_GNOME], [2.16.3])
 GUILE_MODULE_AVAILABLE([HAVE_GNOME_2], [(gnome-2)])
+GUILE_GNOME_INST_DIR
+GUILE_GNOME_LIBS_PATH
+GUILE_GNOME_FLAGS
 AC_SUBST(HAVE_GNOME_2)
 dnl guile-gnome is a set of wrappers, we need to check that the user
 dnl has wrapped the gnome libraries grip needs.  strictly speaking,
