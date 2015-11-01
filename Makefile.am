@@ -56,9 +56,12 @@ SOURCES = \
 	grip/nbs.scm			\
 	grip/xft.scm			\
 	grip/m4/support.scm		\
-	grip/tex-utils.scm
+	grip/tex-utils.scm		\
+	grip/support/slib.scm		\
+	grip/fs-ops.scm
 
 NOCOMP_SOURCES = \
+	grip/support/glob.scm		\
 	grip/m4/guile-gnome-2.m4	\
 	grip/m4/guile.m4		\
 	grip/m4/latex.m4
