@@ -47,9 +47,11 @@
   #:use-module (grip support slib)
 
   #:export (split-filename
+	    get-dirnames
 	    get-filenames
 	    pair-files
 	    mk-dir
+	    rm-dir
 	    cp-files
 	    rm-files
 	    cat-file
@@ -66,6 +68,18 @@
 	 (f-name (if dot (substring b-name 0 dot) b-name))
 	 (f-ext (if dot (substring b-name (1+ dot)) #f)))
     (values d-name b-name f-name f-ext)))
+
+(define* (get-dirnames in #:key (recursively #f))
+  (let ((dirs (list)))
+    (nftw in
+	  (lambda (filename statinfo flag base level)
+	    (case flag
+	      ((directory)
+	       (when (or recursively (= level 1))
+		 (push! filename dirs))))
+	    #t) ;; do not stop
+	  'physical)
+    (reverse! dirs)))
 
 (define* (get-filenames in #:key (like #f) (ci #f) (recursively #f) (dir-assoc #f))
   ;; (dimfi in)
@@ -87,14 +101,15 @@
 		       (split-filename filename)
 		     (when (or (not matcher)
 			       (matcher b-name))
-		       (unless dir-assoc (push! filename files))
 		       (set! file-nb (1+ file-nb))
-		       (let ((values (assoc-ref d-assoc d-name)))
-			 (if values
-			     (set! d-assoc (assoc-set! d-assoc d-name (cons b-name values)))
-			     (begin
-			       (set! dir-nb (1+ dir-nb))
-			       (set! d-assoc (assoc-set! d-assoc d-name (list b-name)))))))))))
+		       (if dir-assoc
+			   (let ((values (assoc-ref d-assoc d-name)))
+			     (if values
+				 (set! d-assoc (assoc-set! d-assoc d-name (cons b-name values)))
+				 (begin
+				   (set! dir-nb (1+ dir-nb))
+				   (set! d-assoc (assoc-set! d-assoc d-name (list b-name))))))
+			   (push! filename files)))))))
 	    #t) ;; do not stop
 	  'physical)
     (if dir-assoc
@@ -122,35 +137,42 @@
 			   (list-ref b-files pos))
 		     paired-files)))))))
 
-(define (mk-dir path)
-  ;; the builtin mkdir guile core function calls the operating system
-  ;; one, not the GNU Linux shell script, but it does not implement
-  ;; the '-p' option, which is essential for us.  here is a first, quick
-  ;; and dirty [it always apply '-p'] implementation, we'll review it
-  ;; later.
-  (let* ((cmd (format #f "mkdir -p ~A" path))
-	 (s (open-input-pipe cmd))
-	 (results (read-line s)))
-    (if (zero? (status:exit-val (close-pipe s)))
-	#t
+(define (mk-dir dirname)
+  ;; the builtin mkdir guile core function calls the operating system one,
+  ;; not the GNU Linux shell script, which does not implement the '-p'
+  ;; option, which is essential for us.  This version always apply -p.
+  (let ((cmd (string-append "mkdir -p " dirname)))
+    (or (system cmd)
+	(error "subprocess returned non-zero result code" cmd))))
+
+(define (rm-dir dirname)
+  (let ((cmd (string-append "rm -rf " dirname)))
+    (or (system cmd)
 	(error "subprocess returned non-zero result code" cmd))))
 
 (define (cp-files files from to)
-  (for-each (lambda (f-bname)
-	      (copy-file (string-append from "/" f-bname) (string-append to "/" f-bname)))
+  (for-each (lambda (file)
+	      (copy-file (string-append from "/" file) (string-append to "/" file)))
       files))
 
-(define* (rm-files in #:key (like #f) (ci #f) (recursively #f))
-  (receive (filenames d-nb f-nb)
-      (get-filenames in #:like like #:ci ci #:recursively recursively)
-    (for-each (lambda (filename) (delete-file filename)) filenames)))
+(define* (rm-files files #:key (in #f))
+  (for-each (lambda (file)
+	      (cond ((and in
+			  (char=? (string-ref file 0) #\/))
+		     (error "rm-files: expecting a basename: " file))
+		    (in
+		     (delete-file (if (char=? (string-ref in
+							  (- (string-length in) 1))
+					      #\/)
+				      (string-append in file)
+				      (string-append in "/" file))))
+		    (else
+		     (delete-file file))))
+      files))
 
 (define* (cat-file a b #:key (mode ">>"))
-  (let* ((cmd (format #f "cat ~A ~A ~A" a mode b))
-	 (s (open-input-pipe cmd))
-	 (results (read-line s)))
-    (if (zero? (status:exit-val (close-pipe s)))
-	#t
+  (let ((cmd (format #f "cat ~A ~A ~A" a mode b)))
+    (or (system cmd)
 	(error "subprocess returned non-zero result code" cmd))))
 
 (define (is-more-recent? filename1 filename2)
