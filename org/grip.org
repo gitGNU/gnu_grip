@@ -16,6 +16,20 @@
 
 - [ ] removing/commenting all dimfi calls before to release
 
+** utils.scm
+
+- [ ] bag instead of storage?
+- [ ] then make-bag so 1 app can have more then 1 bag:
+
+	(define bag1 (make-bag))
+	(bag1 'get key)
+	(bag1 'set key val)
+
+** csv
+
+- [ ] csv is still missing, need to work on that
+
+
 * Grip-SQLite
 * Grip-Gnome
 * Grip-Clutter [42%]
