@@ -38,12 +38,27 @@
   #:use-module (grip reexport)
   #:use-module (grip utils)
 
-  #:export (sys/get-locales
+  #:export (set-locale
+	    sys/get-locales
 	    sys/get-utf8-locales
 	    sys/get-idioms
 	    sys/get-utf8-idioms
 	    sys/get-utf8-idioms-radicals
 	    sys/get-utf8-fallback))
+
+
+(define (set-locale)
+  ;; (setlocale LC_ALL "") raises an exception when the user's environment
+  ;; varibable $LANG is badly defined or defined using a non installed
+  ;; locale.  If this is the case, we catch it and display a warning
+  ;; message instead.
+  (catch #t
+    (lambda () (setlocale LC_ALL ""))
+    (lambda (key . parameters)
+      (let ((lang (getenv "LANG")))
+	(format (current-error-port)
+		"~%WARNING: could not set Guile's ports locale to: ~A.~%~%"
+		lang)))))
 
 
 (define sys/get-locales #f)
