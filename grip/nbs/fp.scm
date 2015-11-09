@@ -44,7 +44,8 @@
 	    ;; float<=?
 	    ;; float>?
 	    ;; float>=?
-	    fp/round))
+	    fp/round
+	    fp/avg))
 
 
 (define %fp/pi
@@ -95,6 +96,14 @@
 	       (expt 10 (car dec))
 	       100)))
     (/ (round (* m float)) m)))
+
+(define (fp/avg vals . dec)
+  ;; named fp/avg for consistency with the rest of this module, but vals
+  ;; can be composed of any [non complex] numbers.
+  (let ((val (/ (apply + vals) (length vals))))
+    (if (pair? dec)
+	(fp/round val (car dec))
+	val)))
 
 
 #!
