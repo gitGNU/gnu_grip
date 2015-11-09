@@ -33,29 +33,26 @@
 
 
 (define-module (grip utils)
-  #:export (storage
-	    storage-get
+  #:export (storage-get
 	    storage-set
 	    displayln
-	    dimfi))
+	    dimfi
+	    abort
+	    and-l))
 
 
-(define storage #f)
 (define storage-get #f)
 (define storage-set #f)
 
-(eval-when (expand load eval)
-  (set! storage (list))
+(let ((storage (list)))
   (set! storage-get
 	(lambda (key)
-	  ;; (format #t "~S~%" storage)
 	  (case key
 	    ((all) storage)
 	    (else
 	     (assq-ref storage key)))))
   (set! storage-set
 	(lambda (key value)
-	  ;; (format #t "~S~%" storage)
 	  (set! storage
 		(assq-set! storage key value)))))
 
@@ -85,6 +82,21 @@
 	    items)
 	(display "\n")))
   (car (last-pair items)))
+
+(define* (abort what msg port #:key (msg-2 #f) (code -1))
+  (display (string-append "ERROR: " what ": " msg) port)
+  (newline port)
+  (when msg-2
+    (display msg-2 port)
+    (newline port))
+  (exit code))
+
+(define (and-l ll)
+  (if (null? ll)
+      #t
+      (if (car ll)
+	  (and-l (cdr ll))
+	  #f)))
 
 
 #!
