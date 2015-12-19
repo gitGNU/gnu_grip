@@ -39,6 +39,7 @@
   #:use-module (gnome clutter)
 
   #:export (clus-make-align-constraint
+	    clus-align
 	    clus-make-bind-constraint
 	    clus-bind
 	    #;clus-make-path-constraint
@@ -48,12 +49,17 @@
 	    clus-snap-south-east
 	    clus-snap-to-source))
 
+
 (define (clus-make-align-constraint source axis factor)
   (make <clutter-align-constraint>
     ;; #:name (symbol->string axis)
     #:source source
     #:align-axis axis
     #:factor factor))
+
+(define (clus-align source actor axis factor)
+  (add-constraint actor
+		  (clus-make-align-constraint source axis factor)))
 
 (define (clus-make-bind-constraint source coordinate offset)
   (make <clutter-bind-constraint>
