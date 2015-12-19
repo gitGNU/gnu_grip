@@ -44,6 +44,7 @@
   #:use-module (gnome gw gdk) ;; gdk-pixbuf
   #:use-module (gnome clutter)
   #:use-module (grip nbs)
+  #:use-module (grip strings)
   #:use-module (grip utils)
   #:use-module (grip clutter)
   #:use-module (grip clutter colour)
@@ -114,31 +115,38 @@
      ("foreground" "#ffffbb")	 	;; span (prop value) or #f
      center				;; line alignment of #f
      fill				;; x-align
-     fill				;; y-align
+     center				;; y-align
      #t					;; x-expand
-     #t)				;; y-expand
-    #;(0 1 1 1 #f "Where" #f #f #f #f start center #t #t)
-    (0 2 1 1 #f "Pole" #f #f #f #f #f start center #t #t)
-    (0 3 1 1 #f "Force" #f #f #f #f #f start center #t #t)
-    #;(1 1 1 1 #f ":" #f #f #f #f #f start center #t #t)
-    (1 2 1 1 #f ":" #f #f #f #f #f start center #t #t)
-    (1 3 1 1 #f ":" #f #f #f #f #f start center #t #t)
-    (0 1 3 1 "gravity" "North West" #f #f #f #f #;("foreground" "#ffffbb") #f start center #t #t)
-    (2 2 1 1 "pole" "North" #f #f #f ("foreground" "LightSkyBlue") #f start center #t #t)
-    (2 3 1 1 "force" "Strong" #f #f #f ("foreground" "#98fb98") #f start center #t #t)
-    (3 1 1 1 #f "[" #f #f "Chocolate" #f #f start center #t #t)
-    (3 2 1 1 #f "[" #f #f "Chocolate" #f #f start center #t #t)
-    (3 3 1 1 #f "[" #f #f "Chocolate" #f #f start center #t #t)
+     #f)				;; y-expand
+    (0 1 3 1 "gravity" "North West" #f #f #f #f #;("foreground" "#ffffbb") #f fill center #t #f)
+    (3 1 1 1 #f "[" #f #f "Chocolate" #f #f fill center #t #f)
     (4 1 1 1 #f
        ,(string-append (str/span "Right" "foreground" "LightSkyBlue")
 		       (str/span ", " "foreground" "Gainsboro")
 		       (str/span "Left" "foreground" "#98fb98"))
-       #f #f #f #f #f start center #t #t)
-    (4 2 1 1 #f "p" #f #f #f ("foreground" "#98fb98") #f start center #t #t)
-    (4 3 1 1 #f "f" #f #f #f ("foreground" "LightSkyBlue") #f start center #t #t)
-    (5 1 1 1 #f "]" #f #f "Chocolate" #f #f start center #t #t)
-    (5 2 1 1 #f "]" #f #f "Chocolate" #f #f start center #t #t)
-    (5 3 1 1 #f "]" #f #f "Chocolate" #f #f start center #t #t)
+       #f #f #f #f #f fill center #t #f)
+    (5 1 1 1 #f "]" #f #f "Chocolate" #f #f fill center #t #f)
+    (6 1 3 1 "r-mode" "Asymmetric" #f #f #f #f #;("foreground" "#ffffbb") #f fill center #t #f)
+    (9 1 1 1 #f "[" #f #f "Chocolate" #f #f fill center #t #f)
+    (10 1 1 1 #f "m" #f #f #f ("foreground" "LightSkyBlue") #f fill center #t #f)
+    (11 1 1 1 #f "]" #f #f "Chocolate" #f #f fill center #t #f)
+
+    (0 2 1 1 #f "Pole" #f #f #f #f #f start center #t #f)
+    (0 3 1 1 #f "Force" #f #f #f #f #f start center #t #f)
+    #;(1 1 1 1 #f ":" #f #f #f #f #f start center #t #f)
+    (1 2 1 1 #f ":" #f #f #f #f #f start center #t #f)
+    (1 3 1 1 #f ":" #f #f #f #f #f start center #t #f)
+
+    (2 2 1 1 "pole" "North" #f #f #f ("foreground" "LightSkyBlue") #f start center #t #f)
+    (2 3 1 1 "force" "Strong" #f #f #f ("foreground" "#98fb98") #f start center #t #f)
+
+    (3 2 1 1 #f "[" #f #f "Chocolate" #f #f start center #t #f)
+    (3 3 1 1 #f "[" #f #f "Chocolate" #f #f start center #t #f)
+    (4 2 1 1 #f "p" #f #f #f ("foreground" "#98fb98") #f start center #t #f)
+    (4 3 1 1 #f "f" #f #f #f ("foreground" "LightSkyBlue") #f start center #t #f)
+
+    (5 2 1 1 #f "]" #f #f "Chocolate" #f #f start center #t #f)
+    (5 3 1 1 #f "]" #f #f "Chocolate" #f #f start center #t #f)
     (6 0 6 1				;; left top width height
      "title-2"				;; actor's name or #f
      "Resistance"			;; text
@@ -148,59 +156,33 @@
      ("foreground" "#ffffbb")	 	;; span (prop value) or #f
      center				;; line alignment of #f
      fill				;; x-align
-     fill				;; y-align
+     center				;; y-align
      #t					;; x-expand
-     #t)				;; y-expand
-    #;(6 1 1 1 #f "Mode" #f #f #f #f start center #t #t)
-    (6 2 1 1 #f "North" #f #f #f #f #f start center #t #t)
-    (6 3 1 1 #f "West" #f #f #f #f #f start center #t #t)
-    #;(7 1 1 1 #f ":" #f #f #f #f #f start center #t #t)
-    (7 2 1 1 #f ":" #f #f #f #f #f start center #t #t)
-    (7 3 1 1 #f ":" #f #f #f #f #f start center #t #t)
-    (6 1 3 1 "r-mode" "Asymmetric" #f #f #f #f #;("foreground" "#ffffbb") #f start center #t #t)
-    (8 2 1 1 "r-north" "0.00" #f #f #f ("foreground" "LightSkyBlue") #f start center #t #t)
-    (8 3 1 1 "r-west" "0.00" #f #f #f ("foreground" "#98fb98") #f start center #t #t)
-    (9 1 1 1 #f "[" #f #f "Chocolate" #f #f start center #t #t)
-    (9 2 1 1 #f "[" #f #f "Chocolate" #f #f start center #t #t)
-    (9 3 1 1 #f "[" #f #f "Chocolate" #f #f start center #t #t)
-    (10 1 1 1 #f "m" #f #f #f ("foreground" "LightSkyBlue") #f start center #t #t)
+     #f)				;; y-expand
+    (6 2 1 1 #f "North" #f #f #f #f #f start center #t #f)
+    (6 3 1 1 #f "West" #f #f #f #f #f start center #t #f)
+    (7 2 1 1 #f ":" #f #f #f #f #f start center #t #f)
+    (7 3 1 1 #f ":" #f #f #f #f #f start center #t #f)
+
+    (8 2 1 1 "r-north" "0.00" #f #f #f ("foreground" "LightSkyBlue") #f start center #t #f)
+    (8 3 1 1 "r-west" "0.00" #f #f #f ("foreground" "#98fb98") #f start center #t #f)
+
+    (9 2 1 1 #f "[" #f #f "Chocolate" #f #f start center #t #f)
+    (9 3 1 1 #f "[" #f #f "Chocolate" #f #f start center #t #f)
+
     (10 2 1 1 #f
 	,(string-append (str/span "\u2191" "foreground" "#98fb98")
 			(str/span ", " "foreground" "Gainsboro")
 			(str/span "\u2193" "foreground" "LightSkyBlue"))
-	#f #f #f #f #f start center #t #t)
+	#f #f #f #f #f start center #t #f)
     (10 3 1 1 #f
 	,(string-append (str/span "\u2190" "foreground" "LightSkyBlue")
 			(str/span ", " "foreground" "Gainsboro")
 			(str/span "\u2192" "foreground" "#98fb98"))
-	#f #f #f #f #f start center #t #t)
-    (11 1 1 1 #f "]" #f #f "Chocolate" #f #f start center #t #t)
-    (11 2 1 1 #f "]" #f #f "Chocolate" #f #f start center #t #t)
-    (11 3 1 1 #f "]" #f #f "Chocolate" #f #f start center #t #t)))
+	#f #f #f #f #f start center #t #f)
 
-(define (clus-toolbar-add-child grid spec)
-  (match spec
-    ((l t w h name text font bg fg span l-align x-align y-align x-expand y-expand)
-     (let ((child (make <clutter-text>
-		    #:text text
-		    #:x-align x-align
-		    #:y-align y-align
-		    #:x-expand x-expand
-		    #:y-expand y-expand
-		    #:use-markup #t)))
-       (set-color child
-		  (if fg (get-colour fg) (get-colour "Gainsboro")))
-       (and name (set-name child name))
-       (and font (set-font-name child font))
-       (and bg (set-background-color child bg))
-       (and span
-	    (match span
-	      ((property value)
-	       (set-markup child
-			   (str/span text property value)))))
-       (and l-align (set-line-alignment child l-align))
-       (add-child grid child l t w h)
-       child))))
+    (11 2 1 1 #f "]" #f #f "Chocolate" #f #f start center #t #f)
+    (11 3 1 1 #f "]" #f #f "Chocolate" #f #f start center #t #f)))
 
 (define (install-stage-button-press-signals stage toolbar gravity)
   (connect stage
@@ -273,13 +255,14 @@
 				 (cbg #f)
 				 (cfg (get-colour "Gainsboro")))
   (let* ((grid (make <clus-grid>
+		 ;; #:background-color (get-darker-colour *clue-stage-colour*)
 		 #:orientation 'horizontal
 		 #:row-spacing 2
 		 #:column-spacing 4
 		 #:row-homogeneous #t
 		 #:column-homogeneous #f))
 	 (children (map (lambda (spec)
-			  (clus-toolbar-add-child grid spec))
+			  (clue-help-grid-add-child grid spec))
 		     %toolbar-help-children-spec))
 	 (gravity (get-child-named grid "gravity"))
 	 (pole (get-child-named grid "pole"))
