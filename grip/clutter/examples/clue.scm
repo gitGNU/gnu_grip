@@ -31,6 +31,7 @@
 
 (define-module (grip clutter examples clue)
   #:use-module (ice-9 receive)
+  #:use-module (ice-9 match)
   #:use-module (ice-9 format)
   #:use-module (oop goops)
   #:use-module (gnome-2)
@@ -39,6 +40,7 @@
   #:use-module (grip reexport)
   #:use-module (grip g-export)
   #:use-module (grip utils)
+  #:use-module (grip strings)
   #:use-module (grip clutter colour)
   #:use-module (grip clutter globals)
   #:use-module (grip clutter constraint)
@@ -73,6 +75,7 @@
 	    clue-display-help
 	    clue-display-version
 	    clue-display-debug-help
+	    clue-help-grid-add-child
 
 	    <clue-header>
 	    <clue-footer>
@@ -197,6 +200,31 @@ what I did for you:
 				 (list (car ovar) (cdr ovar)) port)))
 	ovars))
   (display *clue-debug-help-3* port))
+
+(define (clue-help-grid-add-child grid spec)
+  (match spec
+    ((l t w h name text font bg fg span l-align x-align y-align x-expand y-expand)
+     (let ((child (make <clutter-text>
+		    #:background-color (get-lighter-colour *clue-stage-colour*)
+		    #:text text
+		    #:x-align x-align
+		    #:y-align y-align
+		    #:x-expand x-expand
+		    #:y-expand y-expand
+		    #:use-markup #t)))
+       (set-color child
+		  (if fg (get-colour fg) (get-colour "Gainsboro")))
+       (and name (set-name child name))
+       (and font (set-font-name child font))
+       (and bg (set-background-color child bg))
+       (and span
+	    (match span
+	      ((property value)
+	       (set-markup child
+			   (str/span text property value)))))
+       (and l-align (set-line-alignment child l-align))
+       (add-child grid child l t w h)
+       child))))
 
 
 ;;;
