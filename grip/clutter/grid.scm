@@ -78,9 +78,9 @@
 	  get-dimensions
 	  get-row
 	  get-col
-	  #;get-min-width
-	  #;get-min-height
-	  #;get-min-size)
+	  get-min-width
+	  get-min-height
+	  get-min-size)
 
 
 ;;;
@@ -253,22 +253,19 @@
 		   "~A: col id ~A is bounds"
 		   (list self id) #f))))
 
-;; the following definitions should not be needed anymore, after the
-;; clutter has been patched [see clutter master, commit dea5057].
-
-#;(define-method (get-min-width (self <clus-grid>))
+(define-method (get-min-width (self <clus-grid>))
   (let ((row0 (get-row self 0)))
     (and row0
 	 (+ (reduce + 0 (map get-width row0))
 	    (* (- (length row0) 1) (!column-spacing self))))))
 
-#;(define-method (get-min-height (self <clus-grid>))
+(define-method (get-min-height (self <clus-grid>))
   (let ((col0 (get-col self 0)))
     (and col0
 	 (+ (reduce + 0 (map get-height col0))
 	    (* (- (length col0) 1) (!row-spacing self))))))
 
-#;(define-method (get-min-size (self <clus-grid>))
+(define-method (get-min-size (self <clus-grid>))
   (values (get-min-width self)
 	  (get-min-height self)))
 
