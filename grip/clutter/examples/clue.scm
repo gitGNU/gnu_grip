@@ -205,7 +205,8 @@ what I did for you:
   (match spec
     ((l t w h name text font bg fg span l-align x-align y-align x-expand y-expand)
      (let ((child (make <clutter-text>
-		    #:background-color (get-lighter-colour *clue-stage-colour*)
+		    ;; below only for grid size debug
+		    ;; #:background-color (get-lighter-colour *clue-stage-colour*)
 		    #:text text
 		    #:x-align x-align
 		    #:y-align y-align
