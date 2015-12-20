@@ -111,10 +111,17 @@ exec @GUILE@ --no-auto-compile -e main -s "$0" "$@"
 	     (clue-grid-fill-grid grid grid-child-bg grid-child-fg)
 	     (add-child stage grid)
 	     (add-child stage help)
-	     (clus-snap-south-west stage help 22 20) ;; when parent only
 	     (set-user-resizable stage #t)
 	     (clue-display-version clue-name oport)
 	     (show stage)
+	     ;; some problem wrt the grid, but it is a clutter problem, so for now
+	     ;; I'll set its size manually.  note that it has to be [which is also
+	     ;; not 'normal'] done after (show stage), otherwise width and height are
+	     ;; not correct.  clus-snap-south-east alo depends on proper help's size.
+	     (receive (width height)
+		 (get-min-size help)
+	       (set-size help width height))
+	     (clus-snap-south-west stage help 22 20) ;; when parent only
 	     (when debug?
 	       (set! *stage* stage)
 	       (set! *clue* clue)

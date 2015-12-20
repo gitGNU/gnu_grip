@@ -159,93 +159,48 @@
 ;;; User help stuff
 ;;;
 
-(define %help-col1
-  '("Attach"
-    "Span"
-    "Expand"
-    "Align"))
-
-(define %help-col2
-  `(": left, top"
-    ": width, height"
-    ;; once we use span, we have to span 'back' to the fg,
-    ;; which is a bug in cluter 1.12.2 [or in pango].
-    (,(string-append (str/span ": " "foreground" "Gainsboro")
-		     (str/span "Shift-Left" "foreground" "#98fb98")
-		     (str/span ", " "foreground" "Gainsboro")
-		     (str/span "Shift-Right" "foreground" "LightSkyBlue")))
-    (,(string-append (str/span ": " "foreground" "Gainsboro")
-		     (str/span "Left" "foreground" "LightSkyBlue")
-		     (str/span ", " "foreground" "Gainsboro")
-		     (str/span "Right" "foreground" "#98fb98")))))
-
-(define %help-col3
-  '(""
-    ""
-    ("[")
-    ("[")))
-
-(define %help-col4
-  '(" to tween "))
-
-(define %help-col5
-  '(""
-    ""
-    ("]")
-    ("]")))
-
-(define (clue-grid-user-help-get-col grid items bg fg)
-  (map (lambda (item)
-	 (let ((markup (if (pair? item)
-			   (str/span (car item) "foreground" "Chocolate")
-			   item))
-	       (text (make <clutter-text> #:color fg)))
-	   (if (pair? item)
-	       (set-markup text markup)
-	       (set-text text item))
-	   (set text 'x-align 'start)
-	   (if bg
-	       (let ((actor (make <clutter-actor>
-			      #:background-color bg)))
-		 (set actor 'x-align 'start)
-		 (add-child actor text)
-		 actor)
-	       text)))
-    items))
-
-(define (clue-grid-user-help-add-children grid bg fg)
-  (let* ((grid-layout (!grid-layout grid))
-	 (fg (if fg (get-colour fg) (get-colour "Gainsboro")))
-	 (col1 (clue-grid-user-help-get-col grid %help-col1 bg fg))
-	 (col2 (clue-grid-user-help-get-col grid %help-col2 bg fg))
-	 (col3 (clue-grid-user-help-get-col grid %help-col3 bg fg))
-	 (col4 (clue-grid-user-help-get-col grid %help-col4 bg fg))
-	 (col5 (clue-grid-user-help-get-col grid %help-col5 bg fg)))
-    (do ((i 0 (+ i 1))
-	 (i-col1 col1 (cdr i-col1))
-	 (i-col2 col2 (cdr i-col2))
-	 (i-col3 col3 (cdr i-col3))
-	 (i-col5 col5 (cdr i-col5)))
-	((null? i-col1)
-	 (let ((tween (car col4)))
-	   (set tween 'y-align 'center)
-	   (add-child grid tween 3 2 1 2)))
-      (add-child grid (car i-col1) 0 i 1 1)
-      (add-child grid (car i-col2) 1 i 1 1)
-      (add-child grid (car i-col3) 2 i 1 1)
-      (add-child grid (car i-col5) 4 i 1 1))))
+(define %grid-help-children-spec
+  `(;;line 1
+    (0 0 1 1 #f "Attach" #f #f #f #f #f start center #t #f)
+    (1 0 1 1 #f ": left, top" #f #f #f #f #f start center #t #f)
+    ;; line 2
+    (0 1 1 1 #f "Span" #f #f #f #f #f start center #t #f)
+    (1 1 1 1 #f ": width, height" #f #f #f #f #f start center #t #f)
+    ;; line 3
+    (0 2 1 1 #f "Expand" #f #f #f #f #f start center #t #f)
+    (1 2 1 1 #f
+       ,(string-append (str/span ": " "foreground" "Gainsboro")
+		       (str/span "Shit-Left" "foreground" "#98fb98")
+		       (str/span ", " "foreground" "Gainsboro")
+		       (str/span "Shift-Right" "foreground" "LightSkyBlue"))
+       #f #f #f #f #f start center #t #f)
+    (2 2 1 1 #f "[" #f #f "Chocolate" #f #f fill center #t #t)
+    (3 2 1 2 #f "to tween" #f #f #f #f #f center center #t #f)
+    (4 2 1 1 #f "]" #f #f "Chocolate" #f #f fill center #t #f)
+    ;; line 4
+    (0 3 1 1 #f "Align" #f #f #f #f #f start center #t #f)
+    (1 3 1 1 #f
+       ,(string-append (str/span ": " "foreground" "Gainsboro")
+		       (str/span "Left" "foreground" "LightSkyBlue")
+		       (str/span ", " "foreground" "Gainsboro")
+		       (str/span "Right" "foreground" "#98fb98"))
+       #f #f #f #f #f start center #t #f)
+    (2 3 1 1 #f "[" #f #f "Chocolate" #f #f fill center #t #f)
+    (4 3 1 1 #f "]" #f #f "Chocolate" #f #f fill center #t #f)))
 
 (define* (clue-grid-user-help #:key (bg #f)
 			      (cbg #f)
 			      (cfg (get-colour "Gainsboro")))
-  (let ((grid (make <clus-grid>
-		     #:orientation 'horizontal
-		     #:row-spacing 2
-		     #:column-spacing 4
-		     #:row-homogeneous #t
-		     #:column-homogeneous #f)))
+  (let* ((grid (make <clus-grid>
+		 #:orientation 'horizontal
+		 #:row-spacing 2
+		 #:column-spacing 4
+		 #:row-homogeneous #t
+		 #:column-homogeneous #f))
+	 (children (map (lambda (spec)
+			  (clue-help-grid-add-child grid spec))
+		     %grid-help-children-spec)))
     (when bg (set-background-color grid (get-colour bg)))
-    (clue-grid-user-help-add-children grid cbg cfg)
     grid))
 
 
