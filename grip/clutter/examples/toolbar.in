@@ -56,6 +56,7 @@ exec @GUILE@ --no-auto-compile -e main -s "$0" "$@"
 (define *stage* #f)
 (define *clue* #f)
 (define *toolbar* #f)
+(define *help* #f)
 
 
 ;;;
@@ -99,16 +100,25 @@ exec @GUILE@ --no-auto-compile -e main -s "$0" "$@"
 	     (set! (!gravity-resistance-mode toolbar) 'asym)
 	     (set-easing-duration toolbar 500)
 	     (add-child stage help)
-	     (clus-snap-south-east stage help 36 36) ;; when parent only
 	     (set-user-resizable stage #t)
 	     (clue-display-version clue-name oport)
 	     (show stage)
+	     ;; some problem wrt the grid, but it is a clutter problem, so for now
+	     ;; I'll set its size manually.  note that it has to be [which is also
+	     ;; not 'normal'] done after (show stage), otherwise width and height are
+	     ;; not correct.  clus-snap-south-east alo depends on proper help's size.
+	     (receive (width height)
+		 (get-min-size help)
+	       (set-size help width height))
+	     (clus-snap-south-east stage help 36 36) ;; when parent only
 	     (when debug?
 	       (set! *stage* stage)
 	       (set! *clue* clue)
 	       (set! *toolbar* toolbar)
+	       (set! *help* help)
 	       (receive (server-port thread)
 		   (spawn-server-any-port #:start 1968)
 		 (clue-display-debug-help clue-name server-port oport
-					  #:ovars '(("*toolbar*" . "<clus-toolbar>")))))
+					  #:ovars '(("*toolbar*" . "<clus-toolbar>")
+						    ("*help*" . "<clus-grid>")))))
 	     (clutter-main))))))
