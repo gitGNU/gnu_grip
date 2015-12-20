@@ -6,9 +6,7 @@ dnl
 
 define(GRIP_CONFIGURE_COPYRIGHT,[[
 
-
-Copyright (C) 2015
-Free Software Foundation, Inc.
+Copyright (C) 2015  David Pirotte <david at altosw dot be>
 
 This file is part of Grip.
 
@@ -27,16 +25,16 @@ along with Grip.  If not, see <http://www.gnu.org/licenses/>.
 
 ]])
 
-AC_PREREQ(2.61)
+AC_PREREQ(2.69)
 
-AC_INIT([grip], [0.0.0], [david at altosw dot be])
+AC_INIT([grip], [0.1.0-dev], [david at altosw dot be])
 
 AC_CONFIG_AUX_DIR([build-aux])
 AC_CONFIG_MACRO_DIR([m4])
 dnl Use `serial-tests' so the output `check-guile' is not hidden
 dnl (`parallel-tests' is the default in Automake 1.13.)
 dnl `serial-tests' was introduced in Automake 1.12.
-AM_INIT_AUTOMAKE([1.12 gnu -Wall -Werror -Wno-portability -Wno-syntax \
+AM_INIT_AUTOMAKE([1.14 gnu -Wall -Werror -Wno-portability -Wno-syntax \
   color-tests serial-tests foreign])
 AM_MAINTAINER_MODE([enable])
 AM_SILENT_RULES([yes])
@@ -179,6 +177,9 @@ AC_CONFIG_FILES(
 AC_CONFIG_FILES(
   [grip/clutter/examples/toolbar],
   [chmod +x grip/clutter/examples/toolbar])
+AC_CONFIG_FILES(
+  [grip/clutter/examples/scroll],
+  [chmod +x grip/clutter/examples/scroll])
 AC_CONFIG_FILES(
   [grip/clutter/examples/template],
   [chmod +x grip/clutter/examples/template])
