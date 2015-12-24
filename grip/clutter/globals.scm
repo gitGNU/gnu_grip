@@ -81,7 +81,7 @@
 ;; this should come from guile-clutter itself, but right now there is
 ;; no effective, micro, minor, major version variable for a specific
 ;; binding set.
-(define *clutter-version* "1.12.2")
+(define *clutter-version* "1.12.2.1")
 
 (define *clutter-binding* "Guile-Clutter is a direct binding of the clutter library for the guile
 language.  This is the binding for the clutter library version ~A.")
