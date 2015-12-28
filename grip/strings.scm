@@ -42,7 +42,8 @@
 	    str/get-tokens
 	    str/contains?
 	    str/delete
-	    str/span))
+	    str/span
+	    str/read))
 
 
 (define (str/replace-all str search-for replace-by)
@@ -85,6 +86,9 @@
 
 (define (str/span item property value)
   (string-append "<span " property "=\"" value "\">" item "</span>"))
+
+(define (str/read str)
+  (with-input-from-string str read))
 
 
 #!
