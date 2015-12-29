@@ -187,17 +187,19 @@
 		   ((green) 8)
 		   ((blue) 0)))
 	 (mask (ash #xff offset)))
-    (ash (logand mask xcolour)
-	 (- offset))))
+    (and xcolour
+	 (ash (logand mask xcolour)
+	      (- offset)))))
 
 (define (xcolour->rgb xcolour)
   "Returns a list of red, green and blue integer values for XCOLOUR."
   (let ((xcolour (if (integer? xcolour)
 		     xcolour
 		     (xcolour? xcolour))))
-    (list (xcolour->int xcolour 'red)
-	  (xcolour->int xcolour 'green)
-	  (xcolour->int xcolour 'blue))))
+    (and xcolour
+	 (list (xcolour->int xcolour 'red)
+	       (xcolour->int xcolour 'green)
+	       (xcolour->int xcolour 'blue)))))
 
 (define* (xcolour->rgba xcolour #:key (alpha 255))
   "Returns a list of red, green, blue and alpha integer values for
