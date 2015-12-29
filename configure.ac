@@ -160,6 +160,9 @@ AC_CONFIG_FILES(
   [meta/guild],
   [chmod +x meta/guild])
 AC_CONFIG_FILES(
+  [grip/clutter/examples/template],
+  [chmod +x grip/clutter/examples/template])
+AC_CONFIG_FILES(
   [grip/clutter/examples/bouncer],
   [chmod +x grip/clutter/examples/bouncer])
 AC_CONFIG_FILES(
@@ -181,8 +184,8 @@ AC_CONFIG_FILES(
   [grip/clutter/examples/scroll],
   [chmod +x grip/clutter/examples/scroll])
 AC_CONFIG_FILES(
-  [grip/clutter/examples/template],
-  [chmod +x grip/clutter/examples/template])
+  [grip/clutter/examples/drag],
+  [chmod +x grip/clutter/examples/drag])
 AC_CONFIG_FILES([
 	meta/grip-1.0.pc
 	meta/grip-clutter-1.0.pc

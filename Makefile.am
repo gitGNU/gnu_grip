@@ -112,7 +112,8 @@ SOURCES += \
 	grip/clutter/examples/grid.scm		\
 	grip/clutter/examples/spline.scm	\
 	grip/clutter/examples/toolbar.scm	\
-	grip/clutter/examples/scroll.scm
+	grip/clutter/examples/scroll.scm	\
+	grip/clutter/examples/drag.scm
 
 NOCOMP_SOURCES += \
 	$(shell find $(top_srcdir)/grip/clutter/icons -type f)
@@ -123,7 +124,8 @@ GSCRIPTS = \
 	grip/clutter/examples/grid		\
 	grip/clutter/examples/spline		\
 	grip/clutter/examples/toolbar		\
-	grip/clutter/examples/scroll
+	grip/clutter/examples/scroll		\
+	grip/clutter/examples/drag
 endif
 
 if INSTALL_GRIP_SQLITE

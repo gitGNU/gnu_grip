@@ -30,6 +30,7 @@ grip/clutter/examples/toolbar
 grip/clutter/examples/toolbar.scm.prev
 grip/clutter/examples/spline
 grip/clutter/examples/scroll
+grip/clutter/examples/drag
 *~
 *.aux
 *.cp
