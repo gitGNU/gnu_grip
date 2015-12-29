@@ -159,28 +159,39 @@
 
 (define %xcolour-regexp-1
   (make-regexp "^#[0-9a-fA-F]{3}$"))
-
 (define %xcolour-regexp-2
+  (make-regexp "^[0-9a-fA-F]{3}$"))
+
+(define %xcolour-regexp-3
   (make-regexp "^#[0-9a-fA-F]{6}$"))
+(define %xcolour-regexp-4
+  (make-regexp "^[0-9a-fA-F]{6}$"))
 
 (define (xcolour? xcolour)
   ;; ex: "#fff", "#ffffff"
-  (let* ((xlist (drop (string->list xcolour) 1))
-	 (xlist-6 (cond ((regexp-exec %xcolour-regexp-1 xcolour)
-			 (interleave xlist xlist))
-			((regexp-exec %xcolour-regexp-2 xcolour)
-			 xlist)
-			(else
-			 #f))))
-    (and xlist-6
-	 (str/read (string-append "#x"
-				  (list->string xlist-6))))))
+  (cond ((integer? xcolour)
+	 xcolour)
+	((string? xcolour)
+	 (let* ((xlist (if (char=? (string-ref xcolour 0) #\#)
+			   (drop (string->list xcolour) 1)
+			   (string->list xcolour)))
+		(xlist-6 (cond ((or (regexp-exec %xcolour-regexp-1 xcolour)
+				    (regexp-exec %xcolour-regexp-2 xcolour))
+				(interleave xlist xlist))
+			       ((or (regexp-exec %xcolour-regexp-3 xcolour)
+				    (regexp-exec %xcolour-regexp-4 xcolour))
+				xlist)
+			       (else
+				#f))))
+	   (and xlist-6
+		(str/read (string-append "#x"
+					 (list->string xlist-6))))))
+	(else
+	 #f)))
 
 (define (xcolour->int xcolour channel)
   "Return the integer value of an 8-bit color channel for XCOLOUR."
-  (let* ((xcolour (if (integer? xcolour)
-		     xcolour
-		     (xcolour? xcolour)))
+  (let* ((xcolour (xcolour? xcolour))
 	 (offset (case channel
 		   ((alpha) 24)
 		   ((red) 16)
