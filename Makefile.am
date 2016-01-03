@@ -83,6 +83,7 @@ endif
 
 if INSTALL_GRIP_CLUTTER
 SOURCES += \
+	grip/clutter/utils.scm			\
 	grip/clutter/colour.scm			\
 	grip/clutter/globals.scm		\
 	grip/clutter/animation.scm		\
@@ -104,7 +105,7 @@ SOURCES += \
 	grip/clutter/toolbar.scm		\
 	grip/clutter/bouncer.scm		\
 	grip/clutter/clock.scm			\
-	grip/clutter/utils.scm			\
+	grip/clutter/drag.scm			\
 	grip/clutter.scm			\
 	grip/clutter/examples/clue.scm		\
 	grip/clutter/examples/utils.scm		\

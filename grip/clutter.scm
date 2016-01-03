@@ -37,6 +37,7 @@
   #:use-module (grip g-export)
   #:use-module (grip goops)
   #:use-module (grip utils)
+  #:use-module (grip clutter utils)
   #:use-module (grip clutter colour)
   #:use-module (grip clutter globals)
   #:use-module (grip clutter animation)
@@ -58,12 +59,13 @@
   #:use-module (grip clutter toolbar)
   #:use-module (grip clutter bouncer)
   #:use-module (grip clutter clock)
-  #:use-module (grip clutter utils))
+  #:use-module (grip clutter drag))
 
   
 (eval-when (expand load eval)
   (re-export-public-interface (grip goops)
 			      (grip utils)
+			      (grip clutter utils)
 			      (grip clutter colour)
 			      (grip clutter globals)
 			      (grip clutter animation)
@@ -85,4 +87,4 @@
 			      (grip clutter toolbar)
 			      (grip clutter bouncer)
 			      (grip clutter clock)
-			      (grip clutter utils)))
+			      (grip clutter drag)))

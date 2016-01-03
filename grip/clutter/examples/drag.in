@@ -80,16 +80,14 @@ exec @GUILE@ --no-auto-compile -e main -s "$0" "$@"
 			       #:title clue-title
 			       #:colour *clus-stage-colour*))
 		  (clue (make <clue> #:name clue-name #:stage stage))
-		  (drag (make <clutter-actor> #:x 50 #:y 80
-			      #:width 128 #:height 128
-			      #:background-color %tango-chocolate))
+		  (drag (make <clus-drag>
+			  #:x 50
+			  #:y 80
+			  #:width 128 #:height 128
+			  #:background-color %tango-chocolate))
 		  (help (clue-drag-user-help stage drag)))
-	     (set-reactive drag #t)
-	     (set-opacity drag 196)
 	     (add-child stage drag)
-	     #;(set-easing-duration drag 500)
 	     (add-child stage help)
-	     (set-user-resizable stage #t)
 	     (clue-display-version clue-name oport)
 	     (show stage)
 	     ;; some problem wrt the grid, but it is a clutter problem, so for now

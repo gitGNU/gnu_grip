@@ -78,51 +78,6 @@
     (3 1 1 1 #f "]" #f #f "Chocolate" #f #f fill center #t #f)
     (4 1 1 1 #f " to drag a copy" #f #f #f #f #f fill center #f #f)))
 
-(define (install-drag-signals stage drag)
-  (receive (width height)
-      (get-size drag)
-    (let ((drag2 (make <clutter-actor> #:width width #:height height
-		       #:background-color %tango-chameleon-dark))
-	  (drag-action (clutter-drag-action-new)))
-      (set-opacity drag2 120)
-      (connect drag
-	       'enter-event
-	       (lambda (a e)
-		 (save-easing-state a)
-		 (set-opacity a 255)
-		 (restore-easing-state a)
-		 #f)) ;; yes, please propagate the event
-      (connect drag
-	       'leave-event
-	       (lambda (a e)
-		 (save-easing-state a)
-		 (set-opacity a 196)
-		 (restore-easing-state a)
-		 #f)) ;; yes, please propagate the event
-      (connect drag-action
-	       'drag-begin
-	       (lambda (d r event-x event-y modifiers)
-		 ;; (pk d r event-x event-y modifiers)
-		 (if (memq 'shift-mask (gflags->symbol-list modifiers))
-		     (receive (x y)
-			 (get-position r)
-		       (set-position drag2 x y)
-		       (add-child stage drag2)
-		       (set-drag-handle d drag2))
-		     (set-drag-handle d r))))
-      (connect drag-action
-	       'drag-end
-	       (lambda (d r event-x event-y modifiers) 
-		 ;; (pk d r event-x event-y modifiers)
-		 (if (eq? (get-drag-handle d) drag2)
-		     (receive (x y)
-			 (get-position drag2)
-		       (save-easing-state r)
-		       (set-position r x y)
-		       (restore-easing-state r)
-		       (destroy drag2)))))
-      (add-action drag drag-action))))
-
 (define* (clue-drag-user-help stage drag
 				#:key (bg #f)
 				(cbg #f)
@@ -137,6 +92,5 @@
 	 (children (map (lambda (spec)
 			  (clue-help-grid-add-child grid spec))
 		     %drag-help-specs)))
-    (install-drag-signals stage drag)
     (and bg (set-background-color grid (get-colour bg)))
     grid))
