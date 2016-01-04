@@ -39,6 +39,7 @@
   #:use-module (gnome clutter)
   #:use-module (grip g-export)
   #:use-module (grip utils)
+  #:use-module (grip clutter utils)
   #:use-module (grip clutter colour)
 
   #:export (clus-make-actor))
@@ -72,19 +73,10 @@
   (set-position self 0.0 0.0))
 
 (define-method (get-children-named (self <clutter-actor>) name)
-  (filter-map (lambda (child)
-		(let ((its-name (get-name child)))
-		  (and its-name
-		       (string=? its-name name)
-		       child)))
-      (get-children self)))
+  (clus-get-children-named self name))
 
 (define-method (get-child-named (self <clutter-actor>) name)
-  (let ((kids (get-children-named self name)))
-    (and kids
-	 (when (> (length kids) 1)
-	   (dimfi "WARNING: I found several kids named" name))
-	 (car kids))))
+  (clus-get-child-named self name))
 
 
 #!

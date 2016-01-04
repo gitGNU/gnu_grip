@@ -35,6 +35,7 @@
   #:use-module (ice-9 receive)
   #:use-module (ice-9 match)
   #:use-module (ice-9 format)
+  #:use-module (srfi srfi-1)
   #:use-module (oop goops)
   #:use-module (gnome-2)
   #:use-module (gnome clutter)
@@ -43,7 +44,9 @@
   #:export (mset
 	    dimfi-key-press-event
 	    get-icon-filename
-	    center-on-target))
+	    center-on-target
+	    clus-get-children-named
+	    clus-get-child-named))
 
 
 (define (mset actor propvals)
@@ -83,3 +86,20 @@
       (set-position actor
 		    (/ (- target-w actor-w) 2)
 		    (/ (- target-h actor-h) 2)))))
+
+(define (clus-get-children-named parent name)
+  (filter-map (lambda (child)
+		(let ((its-name (get-name child)))
+		  (and its-name
+		       (string=? its-name name)
+		       child)))
+      (get-children parent)))
+
+(define (clus-get-child-named parent name)
+  (let ((kids (clus-get-children-named parent name)))
+    (match kids
+      (() #f)
+      ((kid) kid)
+      ((kid1 ... kidn)
+       (dimfi "WARNING: I found several kids named" name)
+       kid1))))

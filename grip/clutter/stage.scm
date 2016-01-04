@@ -34,8 +34,10 @@
 
 
 (define-module (grip clutter stage)
+  #:use-module (ice-9 match)
   #:use-module (ice-9 receive)
   #:use-module (ice-9 optargs)
+  #:use-module (srfi srfi-1)
   #:use-module (oop goops)
   #:use-module (gnome-2)
   #:use-module (gnome gobject)
@@ -54,7 +56,9 @@
 	    clus-stage-set-item-on-hold))
 
 
-(g-export !colour)
+(g-export !colour
+	  get-children-named
+	  get-child-named)
 
 
 (define clus-stage-get-item-on-hold #f)
@@ -70,7 +74,7 @@
 
 
 ;;;
-;;; Grid
+;;; Stage
 ;;;
 
 (define-class <clus-stage> (<clutter-stage>)
@@ -111,3 +115,20 @@
 	       (when (clus-stage-get-item-on-hold)
 		 (clus-stage-set-item-on-hold #f))
 	       #f)))) ;; do not stop the event from being propagated
+
+(define-method (get-children-named (self <clus-stage>) name)
+  (filter-map (lambda (child)
+		(let ((its-name (get-name child)))
+		  (and its-name
+		       (string=? its-name name)
+		       child)))
+      (get-children self)))
+
+(define-method (get-child-named (self <clus-stage>) name)
+  (let ((kids (get-children-named self name)))
+    (match kids
+      (() #f)
+      ((kid) kid)
+      ((kid1 ... kidn)
+       (dimfi "WARNING: I found several kids named" name)
+       kid1))))
