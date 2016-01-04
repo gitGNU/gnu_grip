@@ -38,7 +38,8 @@
 	    displayln
 	    dimfi
 	    abort
-	    and-l))
+	    and-l
+	    identities))
 
 
 (define storage-get #f)
@@ -97,6 +98,9 @@
       (if (car ll)
 	  (and-l (cdr ll))
 	  #f)))
+
+(define (identities . args)
+  args)
 
 
 #!
