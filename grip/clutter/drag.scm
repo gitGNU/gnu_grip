@@ -49,10 +49,14 @@
   #:use-module (grip clutter globals)
   
   #:export (<clus-drag>
-	    install-drag-action))
+	    #;install-drag-action))
 
 
-(g-export !colour)
+(g-export !colour
+	  !e-action
+	  !l-action
+	  !db-action
+	  !de-action)
 
 
 ;;;
@@ -66,7 +70,17 @@
 	  #:slot-ref (lambda (self)
 		       (get-background-color self))
 	  #:slot-set! (lambda (self value)
-			(set-background-color self value))))
+			(set-background-color self value)))
+  (opacity-on-enter #:accessor !opacity-on-enter
+		    #:init-keyword #:opacity-on-enter
+		    #:init-value 255)
+  (opacity-on-leave #:accessor !opacity-on-leave
+		    #:init-keyword #:opacity-on-leave
+		    #:init-value 196)
+  (e-action #:accessor !e-action #:init-keyword #:e-action #:init-value identities)
+  (l-action #:accessor !l-action #:init-keyword #:l-action #:init-value identities)
+  (db-action #:accessor !db-action #:init-keyword #:db-action #:init-value identities)
+  (de-action #:accessor !de-action #:init-keyword #:de-action #:init-value identities))
 
 (define-method (initialize (self <clus-drag>) initargs)
   (receive (kw virtual-kw)
@@ -81,57 +95,33 @@
 			((colour #f))
 			(when colour (set! (!colour self) colour)))))
     (set-reactive self #t)
-    (set-opacity self 196)
+    (set-opacity self (!opacity-on-leave self))
     (install-drag-action self)))
 
 (define (install-drag-action drag)
-  (receive (width height)
-	(get-size drag)
-      (let ((drag-copy (make <clutter-actor>
-			 #:width width
-			 #:height height
-			 #:background-color %tango-chameleon-dark))
-	    (drag-action (clutter-drag-action-new)))
-	(set-opacity drag-copy 64)
-	(hide drag-copy)
-	(connect drag
-		 'enter-event
-		 (lambda (a e)
-		   #;(dimfi "enter" a e)
-		   (save-easing-state drag)
-		   (set-opacity drag 255)
-		   (restore-easing-state drag)
-		   #f)) ;; yes, please propagate the event
-	(connect drag
-		 'leave-event
-		 (lambda (a e)
-		   #;(dimfi "leave" a e)
-		   (save-easing-state drag)
-		   (set-opacity drag 196)
-		   (restore-easing-state drag)
-		   #f)) ;; yes, please propagate the event
-	(connect drag-action
-		 'drag-begin
-		 (lambda (d r event-x event-y modifiers)
-		   #;(dimfi "drag-begin" d r event-x event-y modifiers)
-		   (if (memq 'shift-mask (gflags->symbol-list modifiers))
-		       (receive (x y)
-			   (get-position r)
-			 (or (get-stage drag-copy)
-			     (add-child (get-stage drag) drag-copy))
-			 (set-position drag-copy x y)
-			 (show drag-copy)
-			 (set-drag-handle d drag-copy))
-		       (set-drag-handle d drag))))
-	(connect drag-action
-		 'drag-end
-		 (lambda (d r event-x event-y modifiers)
-		   #;(dimfi "drag-end" d r event-x event-y modifiers)
-		   (if (eq? (get-drag-handle d) drag-copy)
-		       (receive (x y)
-			   (get-position drag-copy)
-			 (save-easing-state drag)
-			 (set-position drag x y)
-			 (restore-easing-state drag)
-			 (hide drag-copy)))))
-	(add-action drag drag-action))))
+  (let ((drag-action (clutter-drag-action-new)))
+    (connect drag
+	     'enter-event
+	     (lambda (actor event)
+	       (save-easing-state drag)
+	       (set-opacity drag (!opacity-on-enter drag))
+	       (restore-easing-state drag)
+	       ((!e-action drag) actor event)
+	       #f)) ;; yes, please propagate the event
+    (connect drag
+	     'leave-event
+	     (lambda (actor event)
+	       (save-easing-state drag)
+	       (set-opacity drag (!opacity-on-leave drag))
+	       (restore-easing-state drag)
+	       ((!l-action drag) actor event)
+	       #f)) ;; yes, please propagate the event
+    (connect drag-action
+	     'drag-begin
+	     (lambda (da d event-x event-y modifiers)
+	       ((!db-action drag) da d event-x event-y modifiers)))
+    (connect drag-action
+	     'drag-end
+	     (lambda (da d event-x event-y modifiers)
+	       ((!de-action drag) da d event-x event-y modifiers)))
+    (add-action drag drag-action)))

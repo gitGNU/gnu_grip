@@ -75,16 +75,23 @@ exec @GUILE@ --no-auto-compile -e main -s "$0" "$@"
     (cond (help? (clue-display-help clue-cmd oport))
 	  (version? (clue-display-version clue-name oport))
 	  (else
-	   (let* ((stage (make <clus-stage> #:width *clus-stage-width*
-			       #:height *clus-stage-height*
-			       #:title clue-title
-			       #:colour *clus-stage-colour*))
-		  (clue (make <clue> #:name clue-name #:stage stage))
+	   (let* ((stage (make <clus-stage>
+			   #:width *clus-stage-width*
+			   #:height *clus-stage-height*
+			   #:title clue-title
+			   #:colour *clus-stage-colour*))
+		  (clue (make <clue>
+			  #:name clue-name
+			  #:stage stage))
 		  (drag (make <clus-drag>
-			  #:x 50
-			  #:y 80
-			  #:width 128 #:height 128
-			  #:background-color %tango-chocolate))
+			  #:x 50 #:y 80 #:width 128 #:height 128
+			  #:background-color %tango-chocolate
+			  #:opacity-on-enter 255
+			  #:opacity-on-enter 196
+			  ;; #:e-action [additional on enter action]
+			  ;; #:l-action [additional on leave action]
+			  #:db-action clue-drag-drag-begin-action
+			  #:de-action clue-drag-drag-end-action))
 		  (help (clue-drag-user-help stage drag)))
 	     (add-child stage drag)
 	     (add-child stage help)
@@ -106,6 +113,6 @@ exec @GUILE@ --no-auto-compile -e main -s "$0" "$@"
 	       (receive (server-port thread)
 		   (spawn-server-any-port #:start 1968)
 		 (clue-display-debug-help clue-name server-port oport
-					  #:ovars '(("*drag*" . "<clutter-actor>")
+					  #:ovars '(("*drag*" . "<clus-drag>")
 						    ("*help*" . "<clus-grid>")))))
 	     (clutter-main))))))

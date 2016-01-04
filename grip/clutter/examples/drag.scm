@@ -49,7 +49,9 @@
   #:use-module (grip clutter utils)
   #:use-module (grip clutter examples clue)
 
-  #:export (clue-drag-user-help))
+  #:export (clue-drag-user-help
+	    clue-drag-drag-begin-action
+	    clue-drag-drag-end-action))
 
 
 (define %drag-help-specs
@@ -94,3 +96,31 @@
 		     %drag-help-specs)))
     (and bg (set-background-color grid (get-colour bg)))
     grid))
+
+(define clue-drag-drag-begin-action #f)
+(define clue-drag-drag-end-action #f)
+
+(let ((drag-copy (make <clutter-actor>
+		   #:background-color %tango-chameleon-dark)))
+  (set-opacity drag-copy 64)
+  (set! clue-drag-drag-begin-action
+	(lambda (drag-action drag event-x event-y modifiers)
+	  (if (memq 'shift-mask (gflags->symbol-list modifiers))
+	      (receive (x y)
+		  (get-position drag)
+		(unless (get-stage drag-copy)
+		  (add-child (get-stage drag) drag-copy)
+		  (set-size drag-copy (get-width drag) (get-height drag)))
+		(set-position drag-copy x y)
+		(show drag-copy)
+		(set-drag-handle drag-action drag-copy))
+	      (set-drag-handle drag-action drag))))
+  (set! clue-drag-drag-end-action
+	(lambda (drag-action drag event-x event-y modifiers)
+	  (if (eq? (get-drag-handle drag-action) drag-copy)
+	      (receive (x y)
+		  (get-position drag-copy)
+		(save-easing-state drag)
+		(set-position drag x y)
+		(restore-easing-state drag)
+		(hide drag-copy))))))
