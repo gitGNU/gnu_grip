@@ -106,6 +106,7 @@ SOURCES += \
 	grip/clutter/bouncer.scm		\
 	grip/clutter/clock.scm			\
 	grip/clutter/drag.scm			\
+	grip/clutter/drop.scm			\
 	grip/clutter.scm			\
 	grip/clutter/examples/clue.scm		\
 	grip/clutter/examples/utils.scm		\
@@ -114,7 +115,8 @@ SOURCES += \
 	grip/clutter/examples/spline.scm	\
 	grip/clutter/examples/toolbar.scm	\
 	grip/clutter/examples/scroll.scm	\
-	grip/clutter/examples/drag.scm
+	grip/clutter/examples/drag.scm		\
+	grip/clutter/examples/drop.scm
 
 NOCOMP_SOURCES += \
 	$(shell find $(top_srcdir)/grip/clutter/icons -type f)

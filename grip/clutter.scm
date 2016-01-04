@@ -59,7 +59,8 @@
   #:use-module (grip clutter toolbar)
   #:use-module (grip clutter bouncer)
   #:use-module (grip clutter clock)
-  #:use-module (grip clutter drag))
+  #:use-module (grip clutter drag)
+  #:use-module (grip clutter drop))
 
   
 (eval-when (expand load eval)
@@ -87,4 +88,5 @@
 			      (grip clutter toolbar)
 			      (grip clutter bouncer)
 			      (grip clutter clock)
-			      (grip clutter drag)))
+			      (grip clutter drag)
+			      (grip clutter drop)))

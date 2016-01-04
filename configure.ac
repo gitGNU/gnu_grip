@@ -186,6 +186,9 @@ AC_CONFIG_FILES(
 AC_CONFIG_FILES(
   [grip/clutter/examples/drag],
   [chmod +x grip/clutter/examples/drag])
+AC_CONFIG_FILES(
+  [grip/clutter/examples/drop],
+  [chmod +x grip/clutter/examples/drop])
 AC_CONFIG_FILES([
 	meta/grip-1.0.pc
 	meta/grip-clutter-1.0.pc
