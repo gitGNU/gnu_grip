@@ -117,18 +117,7 @@
 	       #f)))) ;; do not stop the event from being propagated
 
 (define-method (get-children-named (self <clus-stage>) name)
-  (filter-map (lambda (child)
-		(let ((its-name (get-name child)))
-		  (and its-name
-		       (string=? its-name name)
-		       child)))
-      (get-children self)))
+  (clus-get-children-named self name))
 
 (define-method (get-child-named (self <clus-stage>) name)
-  (let ((kids (get-children-named self name)))
-    (match kids
-      (() #f)
-      ((kid) kid)
-      ((kid1 ... kidn)
-       (dimfi "WARNING: I found several kids named" name)
-       kid1))))
+  (clus-get-child-named self name))
