@@ -32,6 +32,7 @@
 
 
 (define-module (grip clutter utils)
+  #:use-module (ice-9 receive)
   #:use-module (ice-9 match)
   #:use-module (ice-9 format)
   #:use-module (oop goops)
@@ -41,7 +42,8 @@
 
   #:export (mset
 	    dimfi-key-press-event
-	    get-icon-filename))
+	    get-icon-filename
+	    center-on-target))
 
 
 (define (mset actor propvals)
@@ -72,3 +74,12 @@
   (string-append (dirname (search-path %load-path "grip/clutter/utils.scm"))
 		 "/icons/gnome/32x32/actions/"
 		 basename))
+
+(define (center-on-target target actor)
+  (receive (target-w target-h)
+      (get-size target)
+    (receive (actor-w actor-h)
+	(get-size actor)
+      (set-position actor
+		    (/ (- target-w actor-w) 2)
+		    (/ (- target-h actor-h) 2)))))
