@@ -91,9 +91,8 @@ exec @GUILE@ --no-auto-compile -e main -s "$0" "$@"
 		   (spawn-server-any-port #:start 1968)
 		 (clue-display-debug-help clue-name server-port oport
 					  #:ovars '(("*clock*" . "<clus-clock>")))))
-	     (call-with-new-thread
-	      (lambda ()
-		(while #t
-		  (sleep 1)
-		  (invalidate (get-content clock)))))
+	     (g-timeout-add 1000
+			    (lambda ()
+			      (invalidate (get-content clock))
+			      #t)) ;; yes, keep the timeout
 	     (clutter-main))))))
