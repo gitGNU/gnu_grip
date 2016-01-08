@@ -47,6 +47,7 @@
   #:use-module (grip goops)
   #:use-module (grip keyword)
   #:use-module (grip utils)
+  #:use-module (grip clutter utils)
   #:use-module (grip clutter colour)
   #:use-module (grip clutter globals)
   
