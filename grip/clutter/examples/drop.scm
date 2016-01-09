@@ -69,16 +69,14 @@
      #t					;; x-expand
      #f)				;; y-expand
     (1 0 1 1 #f "[" #f #f "Chocolate" #f #f start center #t #f)
-    (2 0 1 2 #f "hold down" #f #f #f #f #f start center #t #f)
+    (2 0 1 1 #f "hold down" #f #f #f #f #f start center #t #f)
     (3 0 1 1 #f "]" #f #f "Chocolate" #f #f fill center #t #f)
-    (4 0 1 1 #f " to drop" #f #f #f #f #f fill center #t #f)
+    (4 0 1 1 #f " to drag" #f #f #f #f #f fill center #t #f)
     ;; line 2
     (0 1 1 1 #f
-       ,(str/span "Shift-Left" "foreground" "LightSkyBlue")
+       ,(str/span "Release" "foreground" "LightSkyBlue")
        #f #f #f #f #f start center #t #f)
-    (1 1 1 1 #f "[" #f #f "Chocolate" #f #f start center #t #f)
-    (3 1 1 1 #f "]" #f #f "Chocolate" #f #f fill center #t #f)
-    (4 1 1 1 #f " to drop a copy" #f #f #f #f #f fill center #f #f)))
+    (1 1 4 1 #f " to drop" #f #f #f #f #f fill center #f #f)))
 
 (define* (clue-drop-user-help stage drag
 			      #:key (bg #f)
