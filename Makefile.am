@@ -128,7 +128,8 @@ GSCRIPTS = \
 	grip/clutter/examples/spline		\
 	grip/clutter/examples/toolbar		\
 	grip/clutter/examples/scroll		\
-	grip/clutter/examples/drag
+	grip/clutter/examples/drag		\
+	grip/clutter/examples/drop
 endif
 
 if INSTALL_GRIP_SQLITE
