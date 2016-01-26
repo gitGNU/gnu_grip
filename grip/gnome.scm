@@ -1,7 +1,7 @@
 ;; -*- mode: scheme; coding: utf-8 -*-
 
 ;;;;
-;;;; Copyright (C) 2011 - 2015
+;;;; Copyright (C) 2011 - 2016
 ;;;; David Pirotte <david at altosw dot be>
 
 ;;;; This file is part of Grip.
