@@ -2,16 +2,51 @@
 
 #+TITLE: Grip README
 
-* ( Grip )
+* Grip
 
-a Grip of Really Important Procedures
+Grip, a Grip of Really Important Procedures, is a Guile scheme toolbox
+currently composed of Grip itself, Grip-SQLite, Grip-Gnome and
+Grip-Clutter.
 
-** ( about )
+Grip, Grip-SQLite and Grip-Gnome are mostly used by Kisê, a small and
+easy to use time keeping application entirely written in Guile.
 
-*** ( latest news )
+	Note: Grip, Grip-SQLite and Grip-Gnome need to be and will be
+      rewritten, I started already, you'll spot that by yourself in the
+      code if you visit it: indeed, they come from old times, when I
+      could not trust the Guile's module system, Goops ... and myself
+      [as a schemer :)].
 
+Grip-Clutter is recent and reasonably well designed and coded, despite
+some Goops problems, which we're working on with Guile's maintainers,
+but it still needs more and some app(s) to proove this. So no fixed API
+yet either. It has some good Clutter examples, more to come soon.
 
-** ( the name )
+So, all this said, you are welcome to try and use Grip, keeping the
+above in mind, come and help to get it better designed, coded and
+debugged, thanks!
 
-** ( what else )
+** Latest News
+
+26 Jan 2016
+
+Grip version 0.1.0 is released.
+
+See the NEWS file and http://www.nongnu.org/grip/news.html for further
+details and older news.
+
+See Grip's git summary http://git.savannah.gnu.org/cgit/grip.git and
+http://git.savannah.gnu.org/cgit/grip.git/log/ for further details.
+
+** Savannah
+
+Grip also has a [non GNU] Savannah project page:
+
+	http://savannah.nongnu.org/projects/grip
+
+** License
+
+Grip is a free software, distributed under the terms of the GNU General
+Public License GPLv3 or higher. You must be aware there is no warranty
+whatsoever for Grip. This is described in full in the license.
 

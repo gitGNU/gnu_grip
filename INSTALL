@@ -4,16 +4,34 @@
 
 * ( Grip )
 
-a small and easy to use time keeping application
+a Grip of Really Important Procedures
 
 ** ( dependencies )
 
-Grip needs the following software to run:
+Grip will look for the following dependencies and will try to install
+all its components, but will only do so if it can effectively install
+Grip core and statisfy the component specific requirement(s).
 
-	guile >= 2.0.11
-	guile-gnome >= 2.16.3
-	guile-clutter >= 1.10.2
-    SQLte >= 3.7
+*** Grip
+
+	Autoconf >= 2.69
+	Automake >= 1.14
+	Guile-2.0 >= 2.0.11 or Guile-2.2
+
+*** Grip-SQLite
+
+	SQLite >= 3.7
+
+*** Grip-Gnome
+
+	Guile-Gnome >= 2.16.4, the following wrappers:
+
+		Gobject, Glib, Pango, Pangocairo, libgnome, lingnomeui,
+		libglade, Gtk
+
+*** Grip-Clutter
+
+	Guile-Clutter >= 1.12.2.1
 
 ** ( quickstart )
 
@@ -37,21 +55,28 @@ Happy Grip!
 [1] In the above configure step, --prefix=/your/prefix is optional. The
     default value is /usr/local.
 
-[2] To install Grip, you must have write permissions to (a) the $prefix
-    dir and its subdirs, (b) the guile-gnome-2 dir and subdirs, guile's
-    global site dir and subdirs, and (c) guile’s site-ccache dir [see
-    below].
+[2] To install Grip, you must have write permissions to  (a) the $prefix
+    dir and its subdirs,  (b) guile's global site dir, and  (c)
+    guile’s site-ccache dir.
 
-[3] Grip's modules are installed in the guile-gnome-2 directory.  If you
-    want to know its location, it is listed as part of the configure
-    step and stored in the config.log file, look for "checking for
-    guile-gnome-2"
+    You may check the above two latest directories location using:
 
-[4] Grip's compiled modules are installed in the Guile's site-ccache
-    directory.  If you want to know its location, enter the following
-    expression in a terminal:
-
+		guile -c "(display (%global-site-dir)) (newline)"
 		guile -c "(display (%site-ccache-dir)) (newline)"
+
+    Grip's modules and Grip-Clutter examples, will be installed in
+    Guile's global site directory. Grip's compiled modules will be
+    installed in Guile's site ccache directory.
+
+[3] In case you need to augment Guile's load paths [for your own
+    application(s) for example], you can:  (a) create/update your
+    personnal ~/.guile file,  (b) update Guile's global site located
+    init.scm file or  (c) define/update your GUILE_LOAD_PATH shell
+    environment variable.
+
+[4] Like for any other GNU Tool Chain compatible software, you may
+    install the documentation locally using make install-info, make
+    install-html and/or make install-pdf.
 
 * ( the GNU standard INSTALL file content )
 
