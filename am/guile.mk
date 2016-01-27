@@ -1,6 +1,6 @@
 
 ####
-#### Copyright (C) 2015 David Pirotte
+#### Copyright (C) 2015 - 2016
 #### David Pirotte <david at altosw dot be>
 
 #### This file is part of Grip.
