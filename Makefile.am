@@ -134,10 +134,10 @@ endif
 
 if INSTALL_GRIP_SQLITE
 SOURCES += \
-	grip/sqlite3.scm		\
 	grip/db/filters.scm		\
 	grip/db/sqlite3.scm		\
-	grip/db/sqlite.scm
+	grip/db/sqlite.scm		\
+	grip/sqlite.scm
 endif
 
 # pre-inst-env.in

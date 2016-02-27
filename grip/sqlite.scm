@@ -26,14 +26,12 @@
 ;;; Code:
 
 
-(define-module (grip sqlite3)
-  #:use-module (grip reexport)  
-  #:use-module (grip db filters)
+(define-module (grip sqlite)
+  #:use-module (grip reexport)
   #:use-module (grip db sqlite3)
   #:use-module (grip db sqlite))
 
 
 (eval-when (expand load eval)
-  (re-export-public-interface (grip db filters)
-			      (grip db sqlite3)
+  (re-export-public-interface (grip db sqlite3)
 			      (grip db sqlite)))
