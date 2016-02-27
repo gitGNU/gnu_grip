@@ -38,7 +38,6 @@
   #:use-module (ice-9 popen)
   #:use-module (grip reexport)
   #:use-module (grip db sqlite3)
-  #:use-module (grip db filters)
   #:use-module (grip strings)
   #:use-module (grip lists)
 
@@ -55,6 +54,7 @@
 	    sqlite/table-names
 	    sqlite/table-exists?
 	    sqlite/table-info
+	    sqlite/table-rename
 	    sqlite/build-set-expression
 	    sqlite/build-group-by-order-by-expression
 	    sqlite/add-column))
@@ -84,7 +84,6 @@
 			      (ice-9 rdelim)
 			      (ice-9 popen)
 			      (grip db sqlite3)
-			      (grip db filters)
 			      (grip strings)
 			      (grip lists)))
 
@@ -124,29 +123,38 @@
 (define (sqlite/tuple-pos item tuples pred idx)
   (list-pos item tuples (lambda (a b) (pred (vector-ref a idx) b))))
 
-(define (sqlite/table-names-str)
+(define %sqlite/table-names-str
   "select name from sqlite_master
     where type='table'
  order by name;")
 
-(define (sqlite/table-names db)
+(define* (sqlite/table-names db #:key (refresh #f))
   (let ((cached (sqlite/get db 'table-names)))
-    (or cached
-	(let* ((tuples (sqlite/query db (sqlite/table-names-str)))
+    (if (or refresh
+	    (not cached))
+	(let* ((tuples (sqlite/query db %sqlite/table-names-str))
 	       (table-names (map (lambda (tuple) (vector-ref tuple 0)) tuples)))
 	  (sqlite/set db 'table-names table-names)
-	  table-names))))
+	  table-names)
+	cached)))
 
 (define (sqlite/table-exists? db t-name)
   (member t-name (sqlite/table-names db)))
 
-(define (sqlite/table-info-str)
+(define %sqlite/table-info-str
   "pragma table_info (\"~A\");")
 
 (define (sqlite/table-info db t-name)
   (and (sqlite/table-exists? db t-name)
-       (sqlite/query db (format #f "~?" (sqlite/table-info-str)
+       (sqlite/query db (format #f "~?" %sqlite/table-info-str
 				(list t-name)))))
+
+(define %sqlite/table-rename-str
+  "alter table ~A rename to ~A;")
+
+(define (sqlite/table-rename db from to)
+  (sqlite/command db (format #f "~?" %sqlite/table-rename-str
+			     (list from to))))
 
 (define (sqlite/build-set-expression items . accessor)
   (let ((result #f)
@@ -178,12 +186,12 @@
 	(format #f "~A" result)
 	#f)))
 
-(define (sqlite/add-column-str)
+(define %sqlite/add-column-str
   "alter table ~A add column ~A;")
 
 (define (sqlite/add-column db table column-spec)
   ;; ex: imported_id integer default '-1' not null;
-  (sqlite/command db (format #f "~?" (sqlite/add-column-str)
+  (sqlite/command db (format #f "~?" %sqlite/add-column-str
 			     (list table column-spec))))
 
 
