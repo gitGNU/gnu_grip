@@ -30,7 +30,8 @@
   #:use-module (ice-9 format)
   #:use-module (grip passwd)
 
-  #:export (read-config
+  #:export (get-config-filename
+	    read-config
 	    write-config))
 
 
@@ -46,9 +47,13 @@
       #f))
 
 (define (read-config f-name)
-  (call-with-input-file
-      (get-config-filename f-name)
-    read))
+  (catch #t
+    (lambda ()
+      (call-with-input-file
+	  (get-config-filename f-name)
+	read))
+    (lambda (key . parameters)
+      #f)))
 
 (define (write-config f-name what)
   (call-with-output-file
