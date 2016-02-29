@@ -22,14 +22,13 @@ Like Grip itself, the Grip user manual is a living entity. Right now, the
 contributors to this manual are:
 
 @itemize @bullet
-@item Christian Lalune
 @item David Pirotte
 @end itemize
 
-who are also the authors and maintainers of Grip.
+David is also the author and maintainer of Grip.
 
-You are most welcome to join and help.  Visit Grip's web site at
-@uref{fixme} to find out how to get involved.
+You are most welcome to join and help.  Visit @uref{@value{UGRIP},
+Grip's web site} to find out how to get involved.
 
 
 @node Grip License

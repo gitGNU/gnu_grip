@@ -10,8 +10,9 @@
 
 @menu
 * About Grip::                
-* Grip the name::
-* What else::
+* The name::
+* Savannah::
+@c * What else::
 * Obtaining and Installing Grip::
 * Reporting Bugs::
 @end menu
@@ -22,31 +23,74 @@
 @section About Grip
 
 
-@acronym{Grip, a @acronym{Grip} of Really Important Procedures} is a
-Guile, Guile-Gnome and Guile-Clutter toolbox.
+@uref{@value{UGRIP}, Grip}, a Grip of Really Important Procedures, is a
+@uref{@value{UGUILE}, Guile} Scheme toolbox currently composed of
+@emph{Grip} itself, @emph{Grip-SQLite}, @emph{Grip-Gnome} and
+@emph{Grip-Clutter}.
 
-@node Grip the name
-@section Grip the name
+@emph{Grip}, @emph{Grip-SQLite} and @emph{Grip-Gnome} are mostly used by
+@uref{@value{UFOLIOT}, GNU Foliot}, a small and easy to use time keeping
+application entirely written in @uref{@value{UGUILE}, Guile} Scheme.
 
-Grip comes from the movie world <fixme wikipedia>
+@quotation
+@strong{Note:} @emph{Grip}, @emph{Grip-SQLite} and @emph{Grip-Gnome}
+need to be and will be rewritten, I started already, you'll spot that by
+yourself in the code if you visit it: indeed, they come from old times,
+when I could not trust the Guile's module system, Goops ... and myself
+[as a schemer :)].
+@end quotation
 
-@node What else
-@section What else
+@emph{Grip-Clutter} is recent and reasonably well designed and coded,
+despite some @uref{@value{UGUILE-GOOPS}, Goops} problems, which we're
+working on with Guile's maintainers, but it still needs more and some
+app(s) to proove this. So no fixed API yet either. It has some good
+Clutter examples, more to come soon.
 
-Grip is written in @uref{@value{UGUILE}, guile}, an interpreter and
-compiler for the @uref{@value{USCHEME}, scheme} programming language.
-It uses @uref{@value{UGUILE-GNOME}, guile-gnome}, <fixme guile-clutter>,
-@uref{@value{USQLITE}, SQLite} 
+So, all this said, you are welcome to try and use @emph{Grip}, keeping
+the above in mind, come and help to get it better designed, coded and
+debugged, thanks!
+
+
+@node The name
+@section The name
+
+The term @strong{Grip} is from the early era of the circus. See the
+following @uref{@value{UGRIP-WIKIPEDIA}, Wikipedia}, page for a full
+description, where you'll read the following extract:
+
+@quotation
+... From there it was used in vaudeville and then in today's film sound
+stages and sets. Some have suggested the name comes from the 1930s–40s
+slang term for a @strong{Tool Bag} or @strong{Grip} that these
+technicians use to carry their tools...
+@end quotation
+
+
+@node Savannah
+@section Savannah
+
+@uref{@value{UGRIP}, Grip} also has a [non GNU]
+@uref{@value{UGRIP-SAVANNAH}, Savannah} project page.
+
+
+@c @node What else
+@c @section What else
+
+@c Grip is written in @uref{@value{UGUILE}, guile}, an interpreter and
+@c compiler for the @uref{@value{USCHEME}, scheme} programming language.
+@c It uses @uref{@value{UGUILE-GNOME}, guile-gnome}, <fixme guile-clutter>,
+@c @uref{@value{USQLITE}, SQLite}.
+
 
 @node Obtaining and Installing Grip
 @section Obtaining and Installing Grip
 
-Grip can be obtained from the following archive site
-@uref{@value{UGRIP-RELEASES}}.  The file will be named
-grip-version.tar.gz. The current version is @value{VERSION}, so the file
-you should grab is:
+@emph{Grip} can be obtained from the following
+@uref{@value{UGRIP-RELEASES}, archive} site.  The file will be named
+@emph{grip-version.tar.gz}. The current version is @value{VERSION}, so
+the file you should grab is:
 
-@tie{}@tie{}@tie{}@tie{}@uref{@value{UGRIP-LATEST}}
+@tie{}@tie{}@tie{}@tie{}@uref{@value{UGRIP-LATEST}, grip-@value{VERSION}.tar.gz}
 
 @menu
 * Dependencies::
@@ -56,22 +100,47 @@ you should grab is:
 @node Dependencies
 @subsection Dependencies
 
-Grip needs the following software to run:
+Grip will look for the following dependencies and will try to install
+all its components, but will only do so if it can effectively install
+Grip core and statisfy the component specific requirement(s).
+
+@strong{Grip}
 
 @itemize @bullet
 @item
-@uref{@value{UGUILE}, guile}>= 2.0.11
+Autoconf >= 2.69
 @item
-@uref{@value{UGUILE-GNOME}, guile-gnome} >= 2.16.3
+Automake >= 1.14
 @item
-@uref{@value{UGUILE-CLUTTER}, guile-clutter} >= 1.10.2
+@uref{@value{UGUILE}, Guile-2.0} >= 2.0.11 or Guile-2.2
+@end itemize
+
+@strong{Grip-SQLite}
+
+@itemize @bullet
 @item 
 @uref{@value{USQLITE}, SQLite} >= 3.7
-@item 
-@uref{@value{USQLITE3-PCRE}, sqlite3-pcre}: perl compatible regular expression support for SQLite
-@item
-@uref{@value{ULATEX}, latex}: any recent latex 2e version will do
 @end itemize
+
+@strong{Grip-Gnome}
+
+@itemize @bullet
+@item
+@uref{@value{UGUILE-GNOME}, Guile-Gnome} >= 2.16.4, the following
+wrappers:
+
+  @indentedblock
+  Gobject, Glib, Pango, Pangocairo, libgnome, lingnomeui, libglade, Gtk
+  @end indentedblock
+@end itemize
+
+@strong{Grip-Clutter}
+
+@itemize @bullet
+@item
+@uref{@value{UGUILE-CLUTTER}, Guile-Clutter} >= 1.12.2.1
+@end itemize
+
 
 @node Quickstart
 @subsection Quickstart
@@ -95,34 +164,41 @@ To use grip <fixme>.
 @enumerate
 @item
 In the above @code{configure} step, @code{--prefix=/your/prefix} is
-optional, as indicated by the presence of the @code{[]}.  The default
-value is @code{/usr/local}.
+optional.  The default value is @code{/usr/local}.
+@ifhtml
+@*@*
+@end ifhtml
 
 @item
-To install Grip you must have @code{write permissions} for (a)
-@code{$prefix} and its subdirs, (b) guile's @code{global-site-dir} and
-(c) guile's @code{site-ccache} dir [see below].
+To install Grip you must have @code{write permissions} for the following
+directories:
 
-@item
-Grip's modules are installed in the guile's @code{global-site-dir},
-Grip's compiled modules are installed in the Guile's
-@code{site-ccache}. If you'd like to know where that is, enter the
-following expressions in a terminal:
+@example
+$prefix and its subdirs
+Guile's global site directory
+Guile's site ccache directory
+@end example
+
+You may check the above two latest directories location using:
 
 @example
 guile -c "(display (%global-site-dir)) (newline)"
 guile -c "(display (%site-ccache-dir)) (newline)"
 @end example
 
-@c @item
-@c Unless already done, add @file{/usr/local/bin} or
-@c @file{/your/prefix/bin} to the @code{PATH} variable of your default
-@c shell configuration file.  As an example, using bash, you would add the
-@c following line at the end of your .bashrc file [assuming --prefix=/opt]:
+Grip's modules and Grip-Clutter examples will be installed in Guile's
+global site directory. Grip's compiled modules will be installed in
+Guile's site ccache directory.
 
-@c @example
-@c export PATH=/opt/bin:$PATH
-@c @end example
+@item
+In case you need to augment Guile's @uref{@value{UGUILE-LOADPATH}, load
+paths} [for your own application(s) for example], you can: (a)
+create/update your personnal ~/.guile file, (b) update Guile's global
+site located init.scm file or (c) define/update your GUILE_LOAD_PATH
+shell environment variable.
+@ifhtml
+@*@*
+@end ifhtml
 
 @item
 Like for any other GNU Tool Chain compatible software, you may install

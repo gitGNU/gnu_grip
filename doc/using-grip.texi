@@ -7,12 +7,25 @@
 @node Using Grip
 @chapter Using Grip
 
-blabla
+Grip User's Manual still is a mock-up: any help is more then welcome to
+improve this situation, thanks!
 
 @menu
-* Bluefox::
+* Grip::
+* Grip-SQLite::
+* Grip-Gnome::
+* Grip-Clutter::
 @end menu
 
 
-@node Bluefox
-@section Bluefox
+@node Grip
+@section Grip
+
+@node Grip-SQLite
+@section Grip-SQLite
+
+@node Grip-Gnome
+@section Grip-Gnome
+
+@node Grip-Clutter
+@section Grip-Clutter

@@ -9,14 +9,19 @@
 @set MANUAL-REVISION 1
 
 @set UGUILE http://www.gnu.org/software/guile
+@set UGUILE-GOOPS http://www.gnu.org/software/guile/manual/guile.html#GOOPS
+@set UGUILE-LOADPATH http://www.gnu.org/software/guile/manual/guile.html#Load-Paths
 @set UGUILE-GNOME http://www.gnu.org/software/guile-gnome
-@set UGUILE-CLUTTER <fixme>
+@set UGUILE-CLUTTER http://www.gnu.org/software/guile-gnome/clutter
 @set USQLITE http://www.sqlite.org
 @set USQLITE3-PCRE https://github.com/oojah/sqlite3-pcre
 @set ULATEX http://www.latex-project.org
 @set UIWONA http://www.tug.dk/FontCatalogue/iwona/
 @set USCHEME http://schemers.org
 @set UALTO http://altosw.be
-@set UGRIP <fixme>
-@set UGRIP-RELEASES <fixme>
-@set UGRIP-LATEST <fixme>
+@set UGRIP http://www.nongnu.org/grip/index.html
+@set UGRIP-SAVANNAH http://savannah.nongnu.org/projects/grip
+@set UGRIP-RELEASES http://download.savannah.gnu.org/releases/grip
+@set UGRIP-LATEST http://download.savannah.gnu.org/releases/grip/grip-@value{VERSION}.tar.gz
+@set UGRIP-WIKIPEDIA https://en.wikipedia.org/wiki/Grip_(job)
+@set UFOLIOT http://www.gnu.org/software/foliot/
