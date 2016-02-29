@@ -28,7 +28,7 @@ along with Grip.  If not, see <http://www.gnu.org/licenses/>.
 
 AC_PREREQ(2.69)
 
-AC_INIT([grip], [0.1.0], [david at altosw dot be])
+AC_INIT([grip], [0.1.1], [david at altosw dot be])
 
 AC_CONFIG_AUX_DIR([build-aux])
 AC_CONFIG_MACRO_DIR([m4])
