@@ -4,15 +4,34 @@
 
 * News
 
-** 26 Jan 2016
+** 29 Feb 2016
 
-Grip version 0.1.0 is released.
+Grip version 0.1.1 is released.
 
-This is Grip's first release:
+*** Changes since 0.1.0
 
-	Unlike Amstrong's one, this is a [very] small step for humanity,
-	but a big step for myself, the few Kisê's and Guile-Clutter's
-	[potential] users!
+Grip
+----
+
+    - fixing read-config;
+    - (grip sqlite3) renamed as (grip sqlite).
+
+Gri-SQLite:
+-----------
+
+    - adding sqlite/table-rename;
+    - use %sqlite-* variables for all query/command strings, not
+      procedures;
+    - (grip db sqlite) should not import (grip db filters).
+
+Documentation:
+--------------
+
+	  Note: Grip's Users Manual still is a mock-up.
+
+    - undefined links fixed;
+    - all sections also part of the web-pages now sync.
+
 
 * Older News
 

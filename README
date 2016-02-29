@@ -4,12 +4,14 @@
 
 * Grip
 
-Grip, a Grip of Really Important Procedures, is a Guile scheme toolbox
+Grip, a Grip of Really Important Procedures, is a Guile
+http://www.gnu.org/software/guile/ Scheme toolbox
 currently composed of Grip itself, Grip-SQLite, Grip-Gnome and
 Grip-Clutter.
 
-Grip, Grip-SQLite and Grip-Gnome are mostly used by Kisê, a small and
-easy to use time keeping application entirely written in Guile.
+Grip, Grip-SQLite and Grip-Gnome are mostly used by GNU Foliot,
+http://www.gnu.org/software/foliot/ - a small and easy to use time
+keeping application - entirely written in Guile.
 
 	Note: Grip, Grip-SQLite and Grip-Gnome need to be and will be
       rewritten, I started already, you'll spot that by yourself in the
@@ -28,9 +30,9 @@ debugged, thanks!
 
 ** Latest News
 
-26 Jan 2016
+29 Feb 2016
 
-Grip version 0.1.0 is released.
+Grip version 0.1.1 is released.
 
 See the NEWS file and http://www.nongnu.org/grip/news.html for further
 details and older news.

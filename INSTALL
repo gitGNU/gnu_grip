@@ -2,11 +2,11 @@
 
 #+TITLE: Grip INSTALL
 
-* ( Grip )
+* Grip
 
 a Grip of Really Important Procedures
 
-** ( dependencies )
+** Dependencies
 
 Grip will look for the following dependencies and will try to install
 all its components, but will only do so if it can effectively install
@@ -33,17 +33,17 @@ Grip core and statisfy the component specific requirement(s).
 
 	Guile-Clutter >= 1.12.2.1
 
-** ( quickstart )
+** Quickstart
 
-The latest release is grip-0.1.0.tar.gz [other releases are available
+The latest release is grip-0.1.1.tar.gz [other releases are available
 here: http://download.savannah.gnu.org/releases/grip/
 
 Assuming you have satisfied the dependencies, open a terminal and
 proceed with the following steps:
 
 	cd <download-path>
-	tar zxf grip-0.1.0.tar.gz
-	cd grip-0.1.0
+	tar zxf grip-0.1.1.tar.gz
+	cd grip-0.1.1
 	./configure [--prefix=/your/prefix]
 	make
 	make install
@@ -78,7 +78,7 @@ Happy Grip!
     install the documentation locally using make install-info, make
     install-html and/or make install-pdf.
 
-* ( the GNU standard INSTALL file content )
+* the GNU standard INSTALL file content
 
 Installation Instructions
 *************************
