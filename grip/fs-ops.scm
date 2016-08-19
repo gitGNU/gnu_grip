@@ -34,6 +34,7 @@
 (define-module (grip fs-ops)
   #:use-module (ice-9 popen)
   #:use-module (ice-9 rdelim)
+  #:use-module (ice-9 match)
   #:use-module (ice-9 receive)
   #:use-module (ice-9 ftw)
   #:use-module (srfi srfi-1)
@@ -56,7 +57,9 @@
 	    rm-files
 	    cat-file
 	    is-more-recent?
-	    read-file-string-all))
+	    read-file-string-all
+	    wc
+	    replace-header))
 
 
 (define* (split-filename filename #:key (dot-lindex #f))
@@ -185,3 +188,36 @@
 
 (define (read-file-string-all filename)
   (call-with-input-file filename read-string))
+
+(define (wc filename)
+  (let* ((cmd (string-append "wc " filename))
+	 (s (open-input-pipe cmd))
+	 ;; wc results start with a space
+	 (results (string-trim (read-line s))))
+    (unless (zero? (status:exit-val (close-pipe s)))
+      (error "subprocess returned non-zero result code" cmd))
+    (match (string-split results #\Space)
+      ((lines words bytes name)
+       (values (string->number lines)
+	       (string->number words)
+	       (string->number bytes)
+	       name)))))
+
+(define* (replace-header filename header-filename #:key (end #f))
+  ;; cat new-header.scm > bi2.scm
+  ;; sed '1,21d' bi.scm >> bi2.scm
+  (receive (d-name b-name f-name f-ext)
+      (split-filename filename)
+    (let* ((end (or end
+		    (receive (lines words bytes name)
+			(wc header-filename)
+		      lines)))
+	   (tfile (string-append "/tmp/" b-name))
+	   (sed-cmd (format #f "sed '1,~Ad' ~A >> ~A"
+			    end
+			    filename
+			    tfile)))
+      (cat-file header-filename tfile #:mode ">")
+      (unless (system sed-cmd)
+	(error "subprocess returned non-zero result code" sed-cmd))
+      (copy-file tfile filename))))
