@@ -210,7 +210,7 @@ AC_DEFUN([GUILE_SITE_DIR],
 # The variable is marked for substitution, as by @code{AC_SUBST}.
 #
 AC_DEFUN([GUILE_GLOBAL_SITE_DIR],
- [AC_REQUIRE([GUILE_PKG])
+ [AC_REQUIRE([GUILE_PROGS])
   AC_MSG_CHECKING(for Guile global site directory)
   GUILE_GLOBAL_SITE=`$GUILE -c "(display (%global-site-dir))"`
   AC_MSG_RESULT($GUILE_GLOBAL_SITE)
