@@ -27,9 +27,22 @@
 
 
 (define-module (grip push)
-  #:export (push!
-	    push*))
+  #:use-module (srfi srfi-1)
 
+  #:export (push
+	    push!
+	    push*
+	    push*!
+	    pop
+	    pop!
+	    pop*
+	    pop*!))
+
+
+(define-syntax push
+  (syntax-rules ()
+    ((push item list)
+     (cons item list))))
 
 (define-syntax push!
   (syntax-rules ()
@@ -41,17 +54,80 @@
 (define-syntax push*
   (syntax-rules ()
     ((push* elements ... identifier)
+     (cons* elements ... identifier))))
+
+(define-syntax push*!
+  (syntax-rules ()
+    ((push*! elements ... identifier)
      (begin
        (set! identifier (cons* elements ... identifier))
        identifier))))
+
+(define-syntax pop
+  (syntax-rules ()
+    ((pop list)
+     (if (null? list)
+	 list
+	 (cdr list)))))
+
+(define-syntax pop!
+  (syntax-rules ()
+    ((pop! list)
+     (if (null? list)
+	 list
+	 (begin
+	   (set! list (cdr list))
+	   list)))))
+
+(define-syntax pop*
+  (syntax-rules ()
+    ((pop* list i)
+     (if (> (length list) i)
+	 (drop list i)
+	 '()))))
+
+(define-syntax pop*!
+  (syntax-rules ()
+    ((pop*! list i)
+     (if (> (length list) i)
+	 (begin
+	   (set! list (drop list i))
+	   list)
+	 (begin
+	   (set! list '())
+	   list)))))
+
 
 
 #!
 
 (define l1 '(b a))
+(push 'c l1)
+l1
 (push! 'c l1)
+l1
 
 (define l2 '(c d))
 (push* 'a 'b l2)
+l2
+(push*! 'a 'b l2)
+l2
+
+(define l1 '(b a))
+(pop l1)
+l1
+(pop! l1)
+l1
+
+(define l2 '(c d))
+(pop* l2 2)
+l2
+(pop* l2 3)
+l2
+
+(pop*! l2 2)
+l2
+(pop*! l2 3)
+l2
 
 !#
