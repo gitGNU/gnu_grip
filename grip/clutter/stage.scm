@@ -66,12 +66,11 @@
 (define clus-stage-set-item-on-hold #f)
 
 
-(eval-when (expand load eval)
-  (let ((toolbar-item-on-hold #f))
-    (set! clus-stage-get-item-on-hold
-	  (lambda () toolbar-item-on-hold))
-    (set! clus-stage-set-item-on-hold
-	  (lambda (val) (set! toolbar-item-on-hold val)))))
+(let ((toolbar-item-on-hold #f))
+  (set! clus-stage-get-item-on-hold
+	(lambda () toolbar-item-on-hold))
+  (set! clus-stage-set-item-on-hold
+	(lambda (val) (set! toolbar-item-on-hold val))))
 
 
 ;;;

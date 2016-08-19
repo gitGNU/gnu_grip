@@ -63,15 +63,14 @@
 (define get-next-gravity #f)
 
 
-(eval-when (expand load eval)
-  (let* ((gravities %clus-gravities)
-	 (nb-gravities (length gravities))
-	 (i 0))
-    (set! get-current-gravity (lambda () (list-ref gravities i)))
-    (set! get-next-gravity
-	  (lambda ()
-	    (set! i (modulo (1+ i) nb-gravities))
-	    (list-ref gravities i)))))
+(let* ((gravities %clus-gravities)
+       (nb-gravities (length gravities))
+       (i 0))
+  (set! get-current-gravity (lambda () (list-ref gravities i)))
+  (set! get-next-gravity
+	(lambda ()
+	  (set! i (modulo (1+ i) nb-gravities))
+	  (list-ref gravities i))))
 
 
 (define (get-current-gravity-string)
