@@ -130,7 +130,6 @@ AM_CONDITIONAL([INSTALL_GRIP_CLUTTER],
 record_check guile-clutter $install_grip_clutter
 
 
-# PKG_CHECK_MODULES(SQLite3, sqlite3 >= 3.7)
 # PKG_CHECK_MODULES(libpcre, libpcre)
 
 PKG_CHECK_MODULES(

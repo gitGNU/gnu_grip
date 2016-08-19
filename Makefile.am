@@ -167,7 +167,7 @@ CLEANFILES = \
 # $(bin_SCRIPTS)
 
 if INSTALL_GRIP_GNOME
-pkgconfig_DATA +=\
+pkgconfig_DATA += \
 	meta/grip-gnome-1.0.pc
 EXTRA_DIST += \
 	meta/grip-gnome-1.0.pc.in

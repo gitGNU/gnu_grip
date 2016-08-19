@@ -47,4 +47,4 @@ SUFFIXES = .scm .go
 	$(top_builddir)/meta/guild compile $(GUILE_WARNINGS) -o "$@" "$<"
 
 printenv:
-	printf '$(gev)\n$($gglobalsitedir)\n$(gsiteccache)\n'
+	printf '$(gev)\n$(gglobalsitedir)\n$(gsiteccache)\n'
