@@ -50,16 +50,14 @@
   #:use-module (grip clutter utils)
   #:use-module (grip clutter colour)
   #:use-module (grip clutter globals)
-  
+
   #:export (<clus-stage>
 	    
 	    clus-stage-get-item-on-hold
 	    clus-stage-set-item-on-hold))
 
 
-(g-export !colour
-	  get-children-named
-	  get-child-named)
+(g-export !colour)
 
 
 (define clus-stage-get-item-on-hold #f)
@@ -115,9 +113,3 @@
 	       (when (clus-stage-get-item-on-hold)
 		 (clus-stage-set-item-on-hold #f))
 	       #f)))) ;; do not stop the event from being propagated
-
-(define-method (get-children-named (self <clus-stage>) name)
-  (clus-get-children-named self name))
-
-(define-method (get-child-named (self <clus-stage>) name)
-  (clus-get-child-named self name))
