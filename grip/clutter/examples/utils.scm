@@ -44,6 +44,12 @@
   #:use-module (grip clutter align)
   #:use-module (grip clutter examples clue)
 
+  #:duplicates (merge-generics
+		replace
+		warn-override-core
+		warn
+		last)
+
   #:export (test-gparam-spec-color))
 
 

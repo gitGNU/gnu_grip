@@ -23,6 +23,10 @@
 
 ;;; Commentary:
 
+;; The describe method is defined somewhere in gops and in guile-gnome,
+;; and I can't remember now why, but I was not satisfied with their
+;; respective definition, so here is Grip's version.
+
 ;;; Code:
 
 
@@ -30,10 +34,18 @@
   #:use-module (srfi srfi-1)
   #:use-module (oop goops)
   #:use-module (grip reexport)
+  #:use-module (grip g-export)
 
-  #:export (class-direct-virtual-slots
-	    class-virtual-slots
-	    describe))
+  #:duplicates (merge-generics
+		replace
+		warn-override-core
+		warn
+		last))
+
+
+(g-export class-direct-virtual-slots
+	  class-virtual-slots
+	  describe)
 
 
 (eval-when (expand load eval)

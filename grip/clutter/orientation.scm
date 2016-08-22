@@ -38,6 +38,12 @@
   #:use-module (gnome gobject)
   #:use-module (gnome clutter)
 
+  #:duplicates (merge-generics
+		replace
+		warn-override-core
+		warn
+		last)
+
   #:export (%clus-orientation
 	    clus-orientation?))
 

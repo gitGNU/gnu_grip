@@ -62,6 +62,12 @@
   #:use-module (grip clutter tooltip)
   #:use-module (grip clutter utils)
 
+  #:duplicates (merge-generics
+		replace
+		warn-override-core
+		warn
+		last)
+
   #:export (<clus-toolbar-item>
 	    clus-fullscreen-toolbar-item))
 

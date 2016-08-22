@@ -56,6 +56,12 @@
   #:use-module (grip clutter orientation)
   #:use-module (grip clutter actor)
 
+  #:duplicates (merge-generics
+		replace
+		warn-override-core
+		warn
+		last)
+
   #:export (<clus-apple>))
 
 

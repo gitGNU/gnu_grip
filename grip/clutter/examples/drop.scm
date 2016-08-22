@@ -46,6 +46,12 @@
   #:use-module (grip clutter)
   #:use-module (grip clutter examples clue)
 
+  #:duplicates (merge-generics
+		replace
+		warn-override-core
+		warn
+		last)
+
   #:export (clue-drop-user-help
 	    clue-drop-drag-begin-action
 	    clue-drop-drag-end-action))

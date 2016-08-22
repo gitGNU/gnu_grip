@@ -51,6 +51,12 @@
   #:use-module (grip clutter colour)
   #:use-module (grip clutter globals)
 
+  #:duplicates (merge-generics
+		replace
+		warn-override-core
+		warn
+		last)
+
   #:export (<clus-stage>
 	    
 	    clus-stage-get-item-on-hold

@@ -39,6 +39,12 @@
   #:use-module (gnome clutter)
   #:use-module (grip clutter colour)
 
+  #:duplicates (merge-generics
+		replace
+		warn-override-core
+		warn
+		last)
+
   #:export (#;clus-get-char-width
 	    clus-make-label))
 

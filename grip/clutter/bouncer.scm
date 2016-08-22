@@ -48,6 +48,12 @@
   #:use-module (grip clutter label)
   #:use-module (grip clutter actor)
 
+  #:duplicates (merge-generics
+		replace
+		warn-override-core
+		warn
+		last)
+
   #:export (<clus-bouncer>))
 
 

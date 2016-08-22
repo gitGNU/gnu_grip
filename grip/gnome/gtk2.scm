@@ -35,10 +35,17 @@
 (define-module (grip gnome gtk2)
   #:use-module (ice-9 format)
   #:use-module (oop goops)
+  #:use-module (gnome-2)
   #:use-module (gnome gobject)
   #:use-module (gnome gtk)
   #:use-module (grip reexport)
   #:use-module (grip do)
+
+  #:duplicates (merge-generics
+		replace
+		warn-override-core
+		warn
+		last)
 
   #:export (gtk2/status-push
 	    gtk2/status-pop

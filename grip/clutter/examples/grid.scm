@@ -49,6 +49,12 @@
   #:use-module (grip clutter utils)
   #:use-module (grip clutter examples clue)
 
+  #:duplicates (merge-generics
+		replace
+		warn-override-core
+		warn
+		last)
+
   #:export (clue-grid-fill-grid
 	    clue-grid-user-help))
 

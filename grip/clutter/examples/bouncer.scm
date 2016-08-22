@@ -41,6 +41,12 @@
   #:use-module (gnome clutter)
   #:use-module (grip clutter label)
 
+  #:duplicates (merge-generics
+		replace
+		warn-override-core
+		warn
+		last)
+
   #:export (clue-bouncer-help-message
 	    clue-bouncer-help-label))
 

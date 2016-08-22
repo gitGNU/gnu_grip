@@ -54,6 +54,12 @@
   #:use-module (grip clutter text)
   ;; #:use-module (grip clutter utils)
 
+  #:duplicates (merge-generics
+		replace
+		warn-override-core
+		warn
+		last)
+
   #:export (<clus-tooltip>))
 
 

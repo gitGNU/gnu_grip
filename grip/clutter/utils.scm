@@ -41,6 +41,12 @@
   #:use-module (gnome clutter)
   #:use-module (grip utils)
 
+  #:duplicates (merge-generics
+		replace
+		warn-override-core
+		warn
+		last)
+
   #:export (mset
 	    dimfi-key-press-event
 	    get-icon-filename

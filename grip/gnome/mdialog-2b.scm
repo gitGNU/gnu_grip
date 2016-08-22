@@ -35,12 +35,19 @@
 (define-module (grip gnome mdialog-2b)
   #:use-module (ice-9 format)
   #:use-module (oop goops)
-  #:use-module (gnome gtk)
-  #:use-module (gnome glade)
+  #:use-module (gnome-2)
   #:use-module (gnome gobject)
+  #:use-module (gnome glade)
+  #:use-module (gnome gtk)
   #:use-module (grip reexport)
   #:use-module (grip utils)
   #:use-module (grip gnome gtk2)
+
+  #:duplicates (merge-generics
+		replace
+		warn-override-core
+		warn
+		last)
 
   #:export (md2b/select-gui))
 

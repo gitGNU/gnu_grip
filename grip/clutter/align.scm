@@ -40,6 +40,12 @@
   #:use-module (gnome clutter)
   #:use-module (grip lists)
 
+  #:duplicates (merge-generics
+		replace
+		warn-override-core
+		warn
+		last)
+
   #:export (%clus-align-modes
 	    clus-current-align-mode
 	    clus-next-align-mode))

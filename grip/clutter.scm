@@ -32,7 +32,9 @@
 
 
 (define-module (grip clutter)
+  #:use-module (oop goops)
   #:use-module (gnome-2)
+  #:use-module (gnome clutter)
   #:use-module (grip reexport)
   #:use-module (grip g-export)
   #:use-module (grip goops)
@@ -60,11 +62,19 @@
   #:use-module (grip clutter bouncer)
   #:use-module (grip clutter clock)
   #:use-module (grip clutter drag)
-  #:use-module (grip clutter drop))
+  #:use-module (grip clutter drop)
+
+  #:duplicates (merge-generics
+		replace
+		warn-override-core
+		warn
+		last))
 
   
 (eval-when (expand load eval)
-  (re-export-public-interface (grip goops)
+  (re-export-public-interface (oop goops)
+			      (gnome clutter)
+			      (grip goops)
 			      (grip utils)
 			      (grip clutter utils)
 			      (grip clutter colour)

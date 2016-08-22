@@ -45,6 +45,12 @@
   #:use-module (grip strings)
   #:use-module (grip lists)
 
+  #:duplicates (merge-generics
+		replace
+		warn-override-core
+		warn
+		last)
+
   #:export (get-colour
 	    get-darker-colour
 	    get-lighter-colour

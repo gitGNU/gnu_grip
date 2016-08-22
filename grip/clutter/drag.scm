@@ -47,6 +47,12 @@
   #:use-module (grip utils)
   #:use-module (grip clutter colour)
   #:use-module (grip clutter globals)
+
+  #:duplicates (merge-generics
+		replace
+		warn-override-core
+		warn
+		last)
   
   #:export (<clus-drag>
 	    #;install-drag-action))

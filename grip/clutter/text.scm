@@ -53,6 +53,12 @@
   #:use-module (grip clutter apple)
   #:use-module (grip clutter grid)
 
+  #:duplicates (merge-generics
+		replace
+		warn-override-core
+		warn
+		last)
+
   #:export (<clus-text>))
 
 

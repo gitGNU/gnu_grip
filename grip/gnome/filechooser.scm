@@ -28,8 +28,15 @@
 
 (define-module (grip gnome filechooser)
   #:use-module (oop goops)
+  #:use-module (gnome-2)
   #:use-module (gnome gobject)
   #:use-module (gnome gtk)
+
+  #:duplicates (merge-generics
+		replace
+		warn-override-core
+		warn
+		last)
 
   #:export (prompt-for-filename))
 

@@ -33,7 +33,15 @@
 	    g-export))
 
 (define (module-g-export! m names)
-  (unless (memq 'merge-generics
+  ;; The following check won't work anymore, because in preparation for
+  ;; guile-2.2, which does not query (default-duplicate-binding-handler)
+  ;; at module expand eval load time as it did for guile-2.0, a bad
+  ;; decision imo, we have to declare #:dulicates in each individual
+  ;; module instead, and remove our patched version of guild, which in 2.2
+  ;; has a bug wrt this anyway.  I keep this here i case in the future
+  ;; things change for better instead of for worst, who knows, in
+  ;; guile-3.3 maybe...
+  #;(unless (memq 'merge-generics
 		(default-duplicate-binding-handler))
     (display "Warning: you are using g-export [goops export], which re-export defined
 names and should _only_ be used for getters, setters, accessors and

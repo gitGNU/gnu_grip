@@ -39,6 +39,12 @@
   #:use-module (gnome clutter)
   #:use-module (grip g-export)
 
+  #:duplicates (merge-generics
+		replace
+		warn-override-core
+		warn
+		last)
+
   #:export (<clus-image>))
 
 

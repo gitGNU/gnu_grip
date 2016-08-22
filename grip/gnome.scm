@@ -27,16 +27,24 @@
 
 
 (define-module (grip gnome)
+  #:use-module (oop goops)
   #:use-module (grip reexport)
   #:use-module (grip gnome colours)
   #:use-module (grip gnome key-press)
   #:use-module (grip gnome gtk2)
   #:use-module (grip gnome filechooser)
-  #:use-module (grip gnome mdialogs))
+  #:use-module (grip gnome mdialogs)
+
+  #:duplicates (merge-generics
+		replace
+		warn-override-core
+		warn
+		last))
 
 
 (eval-when (expand load eval)
-  (re-export-public-interface (grip gnome colours)
+  (re-export-public-interface (oop goops)
+			      (grip gnome colours)
 			      (grip gnome key-press)
 			      (grip gnome gtk2)
 			      (grip gnome filechooser)

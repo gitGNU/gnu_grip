@@ -42,6 +42,12 @@
   #:use-module (grip clutter utils)
   #:use-module (grip clutter colour)
 
+  #:duplicates (merge-generics
+		replace
+		warn-override-core
+		warn
+		last)
+
   #:export (clus-make-actor))
 
 

@@ -30,9 +30,16 @@
   #:use-module (ice-9 format)
   #:use-module (ice-9 receive)
   #:use-module (oop goops)
+  #:use-module (gnome-2)
   #:use-module (gnome gobject)
   #:use-module (gnome gtk)
   #:use-module (gnome gtk gdk-event)
+
+  #:duplicates (merge-generics
+		replace
+		warn-override-core
+		warn
+		last)
 
   #:export (get-key-press-infos
 	    display-key-press-infos))
