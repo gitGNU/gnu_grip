@@ -157,9 +157,6 @@ AC_CONFIG_FILES(
   [chmod +x env])
 # AC_CONFIG_FILES([pre-inst-env], [chmod +x pre-inst-env])
 AC_CONFIG_FILES(
-  [meta/guild],
-  [chmod +x meta/guild])
-AC_CONFIG_FILES(
   [grip/clutter/examples/template],
   [chmod +x grip/clutter/examples/template])
 AC_CONFIG_FILES(

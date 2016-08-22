@@ -152,7 +152,6 @@ EXTRA_DIST = \
 	NEWS				\
 	README				\
 	env.in				\
-	meta/guild.in			\
 	meta/grip-1.0.pc.in		\
 	$(wildcard am/*)		\
 	$(wildcard m4/*)		\
@@ -222,9 +221,12 @@ distclean-local:
 	rm -f doc/*.aux doc/*.cp doc/*.cps doc/*.fn doc/*.ky
 	rm -f doc/*.log doc/*.pg doc/*.toc doc/*.tp doc/*.vr
 	rm -f doc/Makefile.in
+	rm -f doc/version.texi
 	rm -f doc/stamp-vti
 	rm -f grip/*~
 	rm -f grip/TAGS
+
+
 
 # * .PHONY: gen-ChangeLog gen-pof:
 
