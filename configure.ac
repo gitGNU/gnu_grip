@@ -153,9 +153,8 @@ record_check sqlite3 $install_grip_sqlite
 # fi
 
 AC_CONFIG_FILES(
-  [env],
-  [chmod +x env])
-# AC_CONFIG_FILES([pre-inst-env], [chmod +x pre-inst-env])
+  [pre-inst-env],
+  [chmod +x pre-inst-env])
 AC_CONFIG_FILES(
   [grip/clutter/examples/template],
   [chmod +x grip/clutter/examples/template])

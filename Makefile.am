@@ -140,9 +140,6 @@ SOURCES += \
 	grip/sqlite.scm
 endif
 
-# pre-inst-env.in
-# almost ready, but let's added later, it still needs 
-# some final touches
 EXTRA_DIST = \
 	AUTHORS				\
 	ChangeLog			\
@@ -151,7 +148,7 @@ EXTRA_DIST = \
 	LICENSE				\
 	NEWS				\
 	README				\
-	env.in				\
+	pre-inst-env.in 		\
 	meta/grip-1.0.pc.in		\
 	$(wildcard am/*)		\
 	$(wildcard m4/*)		\
@@ -212,6 +209,7 @@ distclean-local:
 	rm -rf autom4te.cache
 	rm -rf build-aux
 	rm -f configure
+	rm -f pre-inst-env
 	rm -f *~
 	rm -f grip-*.tar.gz
 	rm -rf doc/grip
