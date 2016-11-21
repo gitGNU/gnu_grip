@@ -42,7 +42,8 @@
 	    first-level-pos-second-level-lookup
 	    list-pair
 	    list-insert
-	    interleave))
+	    interleave
+	    flatten))
 
 
 #!
@@ -114,6 +115,21 @@
 (define (interleave . lls)
   (concatenate (apply map list lls)))
 
+(define (flatten-1 lst result)
+  (if (null? lst)
+      result
+      (let ((x (car lst)))
+	(if (pair? x)
+	    (flatten-1 (cdr lst)
+		       (append (flatten-1 x '())
+			       result))
+	    (flatten-1 (cdr lst)
+		       (cons x result))))))
+
+(define (flatten lst)
+  (reverse! (flatten-1 lst '())))
+
+;; (flatten '(1 2 (3) (4 (5 (6 (7 8) 9) (10 11))) 12))
 
 #!
 

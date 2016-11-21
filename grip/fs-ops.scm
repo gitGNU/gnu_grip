@@ -52,6 +52,7 @@
 	    get-filenames
 	    pair-files
 	    mk-dir
+	    mv-files
 	    rm-dir
 	    cp-files
 	    rm-files
@@ -156,6 +157,11 @@
 (define (cp-files files from to)
   (for-each (lambda (file)
 	      (copy-file (string-append from "/" file) (string-append to "/" file)))
+      files))
+
+(define (mv-files files from to)
+  (for-each (lambda (file)
+	      (rename-file (string-append from "/" file) (string-append to "/" file)))
       files))
 
 (define* (rm-files files #:key (in #f))
