@@ -27,7 +27,7 @@
 
 
 (define-module (grip g-export)
-  #:use-module (oop goops)
+  ;; #:use-module (oop goops)
 
   #:export (module-g-export!
 	    g-export))
